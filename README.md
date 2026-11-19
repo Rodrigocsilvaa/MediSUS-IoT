@@ -9,6 +9,16 @@ Este projeto demonstra como uma leitura de temperatura pode sair de um sensor, p
 > [!IMPORTANT]
 > Este é um protótipo acadêmico. Os limites padrão de **2 °C a 8 °C são apenas parâmetros de demonstração** — não são recomendação médica, regra universal ou orientação regulatória. Em qualquer aplicação real, os limites devem vir de uma fonte oficial aplicável ao produto específico. O sketch e o circuito não foram validados em hardware.
 
+## Equipe
+
+| Integrante | RM |
+|---|---:|
+| Natália Cristina | RM564099 |
+| Nickolas Davi | RM564105 |
+| Rodrigo Silva | RM565162 |
+| Samara Vilela | RM566133 |
+| Otávio Ferreira | RM565960 |
+
 ## Baixar o código no Windows
 
 Abra o PowerShell e clone a branch que contém este protótipo:
@@ -44,6 +54,7 @@ Não é necessária uma extensão do VS Code para rodar a demonstração com Doc
 - [Executar a demonstração](#início-rápido-execute-a-demonstração)
 - [Gerar um resumo com IA](#gerar-um-resumo-com-ia)
 - [Executar os testes](#executar-os-testes)
+- [Evidências e avaliação](#evidências-e-avaliação)
 - [Integração de referência ESP32 e DS18B20](#integração-de-referência-esp32-e-ds18b20)
 - [Formato das mensagens](#formato-das-mensagens)
 - [Limitações e uso responsável](#limitações-e-uso-responsável)
@@ -174,12 +185,18 @@ docker compose down --volumes
 
 Os testes cobrem a validação de payloads, a interpretação de limites, o registro de leituras e a integração com a IA usando uma resposta simulada. Eles usam a biblioteca padrão do Python, não precisam de um broker MQTT e **não fazem chamadas externas à API**.
 
+O GitHub Actions também executa automaticamente essa suíte ao enviar alterações para a branch ou abrir um pull request. O workflow está em `.github/workflows/tests.yml`.
+
 **Windows PowerShell:**
 
 ```powershell
 $env:PYTHONPATH = "src"
 python -m unittest discover -s tests -v
 ```
+
+## Evidências e avaliação
+
+Os logs, capturas de tela, casos de teste, resultados e limitações estão em [`evidence/EVIDENCIAS.md`](evidence/EVIDENCIAS.md). As temperaturas mostradas são sintéticas. A documentação separa os testes locais realizados das etapas que ainda dependem de execução via Docker Compose e de uma chave válida para testar a API real de IA.
 
 ## Configuração da demonstração
 
@@ -251,6 +268,8 @@ Payloads inválidos são rejeitados e descritos nos logs; não são gravados com
 ├── docker-compose.yml            # Broker, serviço, simulador e perfil de IA
 ├── Dockerfile                    # Imagem do serviço Python
 ├── mosquitto/mosquitto.conf      # Configuração local do broker MQTT
+├── .github/workflows/tests.yml   # Execução automatizada dos testes no GitHub
+├── evidence/                     # Logs, capturas e relatório de avaliação
 ├── src/medisus_iot/
 │   ├── monitor.py                # Assinatura MQTT, alertas e coordenação
 │   ├── readings.py               # Validação e avaliação dos limites

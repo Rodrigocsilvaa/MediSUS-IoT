@@ -1,5 +1,6 @@
 import sqlite3
 import tempfile
+import threading
 import unittest
 from pathlib import Path
 
@@ -37,6 +38,36 @@ class ReadingStoreTests(unittest.TestCase):
                 {
                     "temperature_c": 8.5,
                     "timestamp": "2026-01-01T12:01:00+00:00",
+                    "alert": True,
+                }
+            ],
+        )
+        store.close()
+
+    def test_records_from_another_thread_like_mqtt_callback(self):
+        store = ReadingStore(":memory:")
+        errors = []
+
+        def record_from_callback():
+            try:
+                store.record(
+                    Reading("sensor-1", 8.5, "2026-01-01T12:00:00+00:00"),
+                    True,
+                )
+            except Exception as exc:
+                errors.append(exc)
+
+        callback_thread = threading.Thread(target=record_from_callback)
+        callback_thread.start()
+        callback_thread.join()
+
+        self.assertEqual(errors, [])
+        self.assertEqual(
+            store.latest_readings(),
+            [
+                {
+                    "temperature_c": 8.5,
+                    "timestamp": "2026-01-01T12:00:00+00:00",
                     "alert": True,
                 }
             ],

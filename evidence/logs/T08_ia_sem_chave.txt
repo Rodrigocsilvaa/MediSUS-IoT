@@ -1,0 +1,38 @@
+$ python -m medisus_iot.ai_summary   (sem OPENAI_API_KEY)
+Defina OPENAI_API_KEY para gerar o resumo com IA.
+exit=1
+
+$ python -m medisus_iot.ai_summary   (com chave, banco vazio)
+Nenhuma leitura encontrada. Execute o simulador primeiro.
+exit=1
+
+$ dados que seriam enviados para a IA (latest_readings):
+{
+ "readings": [
+  {
+   "temperature_c": 4.5,
+   "timestamp": "2026-11-19T21:12:20.112712+00:00",
+   "alert": false
+  },
+  {
+   "temperature_c": 5.2,
+   "timestamp": "2026-11-19T21:12:21.114221+00:00",
+   "alert": false
+  },
+  {
+   "temperature_c": 8.3,
+   "timestamp": "2026-11-19T21:12:22.116141+00:00",
+   "alert": true
+  },
+  {
+   "temperature_c": 3.8,
+   "timestamp": "2026-11-19T21:12:23.117866+00:00",
+   "alert": false
+  },
+  {
+   "temperature_c": 1.5,
+   "timestamp": "2026-11-19T21:12:24+00:00",
+   "alert": true
+  }
+ ]
+}

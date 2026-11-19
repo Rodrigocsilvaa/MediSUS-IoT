@@ -1,0 +1,6 @@
+$ MIN_TEMP_C=8 MAX_TEMP_C=2 python -m medisus_iot.monitor
+ValueError: MIN_TEMP_C must be lower than MAX_TEMP_C
+exit=1
+
+$ MIN_TEMP_C=abc python -m medisus_iot.monitor
+ValueError: MIN_TEMP_C must be a number

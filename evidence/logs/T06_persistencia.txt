@@ -1,0 +1,4 @@
+$ (monitor parado e iniciado de novo com o mesmo banco)
+Leituras após reinício: 5
+2026-11-19 18:12:40,352 INFO Conectado ao broker localhost:1883; assinando medisus/ubs/+/temperatura
+Leituras ainda no banco: 5

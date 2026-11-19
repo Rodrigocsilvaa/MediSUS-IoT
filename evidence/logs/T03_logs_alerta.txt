@@ -1,0 +1,6 @@
+2026-11-19 18:12:18,117 INFO Conectado ao broker localhost:1883; assinando medisus/ubs/+/temperatura
+2026-11-19 18:12:20,119 INFO {"device_id": "simulador-ubs-demo", "temperature_c": 4.5, "timestamp": "2026-11-19T21:12:20.112712+00:00", "alert": false}
+2026-11-19 18:12:21,119 INFO {"device_id": "simulador-ubs-demo", "temperature_c": 5.2, "timestamp": "2026-11-19T21:12:21.114221+00:00", "alert": false}
+2026-11-19 18:12:22,121 WARNING {"device_id": "simulador-ubs-demo", "temperature_c": 8.3, "timestamp": "2026-11-19T21:12:22.116141+00:00", "alert": true}
+2026-11-19 18:12:23,122 INFO {"device_id": "simulador-ubs-demo", "temperature_c": 3.8, "timestamp": "2026-11-19T21:12:23.117866+00:00", "alert": false}
+2026-11-19 18:12:24,163 WARNING {"device_id": "teste-limite-inferior", "temperature_c": 1.5, "timestamp": "2026-11-19T21:12:24+00:00", "alert": true}

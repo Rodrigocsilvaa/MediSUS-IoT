@@ -1,0 +1,12 @@
+Publicado payload inválido: nao-e-json
+Publicado payload inválido: [1,2]
+Publicado payload inválido: {"device_id":"x","temperature_c":true,"timestamp":"2026-01-01T12:00:00Z"}
+Publicado payload inválido: {"device_id":"x","temperature_c":200,"timestamp":"2026-01-01T12:00:00Z"}
+Publicado payload inválido: {"device_id":"x","temperature_c":5,"timestamp":"2026-01-01T12:00:00"}
+Publicado payload inválido: {"device_id":"","temperature_c":5,"timestamp":"2026-01-01T12:00:00Z"}
+2026-11-19 18:12:24,137 WARNING Leitura rejeitada no tópico medisus/ubs/demo/temperatura: payload must be valid JSON
+2026-11-19 18:12:24,141 WARNING Leitura rejeitada no tópico medisus/ubs/demo/temperatura: payload must be a JSON object
+2026-11-19 18:12:24,144 WARNING Leitura rejeitada no tópico medisus/ubs/demo/temperatura: temperature_c must be a number
+2026-11-19 18:12:24,147 WARNING Leitura rejeitada no tópico medisus/ubs/demo/temperatura: temperature_c is outside the DS18B20 range
+2026-11-19 18:12:24,150 WARNING Leitura rejeitada no tópico medisus/ubs/demo/temperatura: timestamp must include a timezone
+2026-11-19 18:12:24,153 WARNING Leitura rejeitada no tópico medisus/ubs/demo/temperatura: device_id must be a non-empty string of at most 100 characters

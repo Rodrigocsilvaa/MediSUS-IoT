@@ -1,0 +1,15 @@
+docker compose config --quiet: OK
+
+Servicos sem perfil:
+mosquitto
+monitor
+
+Servicos com perfil demo:
+mosquitto
+monitor
+simulator
+
+Servicos com perfil ai:
+mosquitto
+monitor
+ai-summary

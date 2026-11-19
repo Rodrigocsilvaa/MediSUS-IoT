@@ -1,0 +1,20 @@
+Python 3.14.5
+
+test_rejects_missing_api_key_and_empty_readings (test_ai_summary.GenerateSummaryTests.test_rejects_missing_api_key_and_empty_readings) ... ok
+test_rejects_response_without_summary (test_ai_summary.GenerateSummaryTests.test_rejects_response_without_summary) ... ok
+test_sends_readings_to_ai_and_returns_summary (test_ai_summary.GenerateSummaryTests.test_sends_readings_to_ai_and_returns_summary) ... ok
+test_normalizes_timezone_and_accepts_temperature (test_readings.ParseReadingTests.test_normalizes_timezone_and_accepts_temperature) ... ok
+test_rejects_boolean_and_out_of_sensor_range (test_readings.ParseReadingTests.test_rejects_boolean_and_out_of_sensor_range) ... ok
+test_rejects_missing_timezone (test_readings.ParseReadingTests.test_rejects_missing_timezone) ... ok
+test_rejects_non_object_json (test_readings.ParseReadingTests.test_rejects_non_object_json) ... ok
+test_alerts_only_outside_configured_range (test_readings.ThresholdTests.test_alerts_only_outside_configured_range) ... ok
+test_rejects_invalid_thresholds (test_readings.ThresholdTests.test_rejects_invalid_thresholds) ... ok
+test_latest_readings_are_chronological_and_do_not_include_device_id (test_storage.ReadingStoreTests.test_latest_readings_are_chronological_and_do_not_include_device_id) ... ok
+test_records_from_another_thread_like_mqtt_callback (test_storage.ReadingStoreTests.test_records_from_another_thread_like_mqtt_callback) ... ok
+test_records_reading_and_alert_flag (test_storage.ReadingStoreTests.test_records_reading_and_alert_flag) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.014s
+
+OK
+exit=0

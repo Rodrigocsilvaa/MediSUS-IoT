@@ -1,0 +1,7 @@
+(device_id, temperature_c, timestamp, alert)
+('simulador-ubs-demo', 4.5, '2026-11-19T21:12:20.112712+00:00', 0)
+('simulador-ubs-demo', 5.2, '2026-11-19T21:12:21.114221+00:00', 0)
+('simulador-ubs-demo', 8.3, '2026-11-19T21:12:22.116141+00:00', 1)
+('simulador-ubs-demo', 3.8, '2026-11-19T21:12:23.117866+00:00', 0)
+('teste-limite-inferior', 1.5, '2026-11-19T21:12:24+00:00', 1)
+Total: 5 | Alertas: 2

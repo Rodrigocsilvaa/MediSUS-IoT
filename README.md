@@ -1,83 +1,178 @@
-# MediSUS IoT — monitoramento demonstrativo de temperatura
+# MediSUS IoT
 
-Protótipo independente para demonstrar o fluxo de monitoramento da temperatura de armazenamento de medicamentos em uma UBS. O fluxo usa um broker MQTT, um serviço Python que valida e registra leituras e um simulador com dados sintéticos. O sketch do ESP32 com sensor DS18B20 é uma referência para integração futura.
+### Protótipo acadêmico de monitoramento demonstrativo de temperatura
 
-> **Atenção:** os limites padrão deste projeto são parâmetros de demonstração, não recomendações médicas nem limites regulatórios. Antes de qualquer uso real, configure os limites a partir de uma fonte oficial aplicável ao produto específico. Este protótipo não foi validado em hardware e não substitui instrumentos ou procedimentos qualificados.
+Este projeto demonstra como uma leitura de temperatura pode sair de um sensor, passar por MQTT e ser validada, registrada e sinalizada por um serviço. O cenário de referência é o armazenamento de medicamentos em uma Unidade Básica de Saúde (UBS).
 
-## Requisitos
+**O projeto funciona sem placa ou sensor:** um simulador publica leituras sintéticas para que qualquer pessoa possa executar e observar o fluxo completo usando Docker Compose.
 
-- Docker com Docker Compose v2 para executar o broker e o serviço.
-- Python 3.10+ e `pip` para executar os testes localmente.
-- Para o sketch: Arduino IDE ou PlatformIO, placa ESP32 e bibliotecas `PubSubClient`, `OneWire` e `DallasTemperature`.
+> [!IMPORTANT]
+> Este é um protótipo acadêmico. Os limites padrão de **2 °C a 8 °C são apenas parâmetros de demonstração** — não são recomendação médica, regra universal ou orientação regulatória. Em qualquer aplicação real, os limites devem vir de uma fonte oficial aplicável ao produto específico. O sketch e o circuito não foram validados em hardware.
 
-## Executar a demonstração
+## Baixar o código no Windows
 
-Na raiz deste repositório:
+Abra o PowerShell e clone a branch que contém este protótipo:
 
-```sh
+```powershell
+git clone --branch rodrigocsilvaa-iot-prototype https://github.com/Rodrigocsilvaa/MediSUS-IoT.git
+Set-Location MediSUS-IoT
+```
+
+O código também pode ser consultado diretamente na [página do projeto no GitHub](https://github.com/Rodrigocsilvaa/MediSUS-IoT/tree/rodrigocsilvaa-iot-prototype).
+
+## Abrir e executar pelo VS Code
+
+1. Instale o Visual Studio Code e o Docker Desktop. O Docker Desktop precisa estar aberto para iniciar os contêineres.
+2. No PowerShell, entre na pasta do projeto e abra-a no VS Code:
+
+   ```powershell
+   Set-Location MediSUS-IoT
+   code .
+   ```
+
+   Se o comando `code` não estiver disponível, abra o VS Code e escolha **Arquivo > Abrir Pasta...**; selecione a pasta `MediSUS-IoT`.
+3. No VS Code, abra **Terminal > Novo Terminal**. O terminal integrado deve estar na pasta do projeto.
+4. Execute os comandos da seção [Início rápido](#início-rápido-execute-a-demonstração). Os logs e o resultado do simulador aparecerão nesse terminal.
+
+Não é necessária uma extensão do VS Code para rodar a demonstração com Docker Compose. Para editar e executar os testes Python localmente, instale Python 3.10 ou superior.
+
+## Navegação
+
+- [O que o projeto demonstra](#o-que-o-projeto-demonstra)
+- [Como os componentes se conectam](#como-os-componentes-se-conectam)
+- [Abrir e executar pelo VS Code](#abrir-e-executar-pelo-vs-code)
+- [Executar a demonstração](#início-rápido-execute-a-demonstração)
+- [Executar os testes](#executar-os-testes)
+- [Integração de referência ESP32 e DS18B20](#integração-de-referência-esp32-e-ds18b20)
+- [Formato das mensagens](#formato-das-mensagens)
+- [Limitações e uso responsável](#limitações-e-uso-responsável)
+
+## O que o projeto demonstra
+
+- Um **ESP32 com sensor DS18B20** pode publicar uma leitura de temperatura em uma mensagem MQTT.
+- Um **broker Mosquitto** recebe e distribui as mensagens.
+- Um **serviço Python** valida cada leitura, compara a temperatura com os limites configurados e grava os dados em SQLite.
+- Quando a temperatura fica fora do intervalo configurado, o serviço marca a leitura como alerta e a destaca nos logs.
+- Um **simulador** substitui o sensor físico na demonstração e envia apenas dados sintéticos.
+
+O alerta é demonstrativo: aparece nos logs e no registro SQLite. Não é uma notificação para uma pessoa nem uma garantia de resposta a uma situação real.
+
+## Como os componentes se conectam
+
+```mermaid
+flowchart LR
+    S["DS18B20<br/>sensor físico"] --> E["ESP32<br/>firmware de referência"]
+    SIM["Simulador<br/>leituras sintéticas"] --> M["Broker MQTT<br/>Mosquitto"]
+    E -->|"Wi-Fi / MQTT"| M
+    M -->|"tópico de temperatura"| P["Serviço Python"]
+    P --> V["Validação e comparação<br/>com limites configurados"]
+    V --> DB[("SQLite<br/>leituras e alertas")]
+    V --> LOG["Logs<br/>leitura ou alerta"]
+```
+
+Na demonstração rápida, o simulador ocupa o lugar do sensor e do ESP32. O firmware é uma referência de integração futura.
+
+## O que você precisa
+
+Para executar a demonstração:
+
+- Docker Desktop instalado e **em execução**.
+- Docker Compose v2 (incluído nas versões atuais do Docker Desktop).
+
+Para executar os testes localmente, também é necessário Python 3.10 ou superior. A conexão do ESP32 é opcional e exige placa, sensor e Arduino IDE ou PlatformIO.
+
+## Início rápido: execute a demonstração
+
+Abra um terminal na pasta do repositório. Inicie o broker e o serviço:
+
+```powershell
 docker compose up -d --build mosquitto monitor
+```
+
+Quando os serviços estiverem iniciados, execute o simulador:
+
+```powershell
 docker compose --profile demo run --rm simulator
-docker compose logs monitor
 ```
 
-O simulador publica quatro leituras sintéticas no tópico `medisus/ubs/demo/temperatura`. Com os limites de demonstração padrão (`2 °C` a `8 °C`), uma leitura acima do limite gera um alerta nos logs. As demais leituras válidas também são registradas no banco SQLite do serviço.
+Veja o resultado:
 
-Para acompanhar o broker e o serviço:
-
-```sh
-docker compose logs -f mosquitto monitor
+```powershell
+docker compose logs --no-color monitor
 ```
 
-Para parar os contêineres:
+Também é possível verificar o estado dos contêineres:
 
-```sh
+```powershell
+docker compose ps
+```
+
+### Resultado esperado
+
+O simulador envia quatro leituras **sintéticas**: `4.5 °C`, `5.2 °C`, `8.3 °C` e `3.8 °C`. Com os limites demonstrativos padrão de `2 °C` e `8 °C`:
+
+| Leitura sintética | Resultado esperado |
+|---:|---|
+| 4.5 °C | Dentro do intervalo; registrada sem alerta |
+| 5.2 °C | Dentro do intervalo; registrada sem alerta |
+| 8.3 °C | Acima do limite demonstrativo; registrada com alerta |
+| 3.8 °C | Dentro do intervalo; registrada sem alerta |
+
+No log do serviço, cada leitura válida aparece como JSON. A leitura `8.3 °C` aparece no nível `WARNING` com `"alert": true`; as outras aparecem como `INFO` com `"alert": false`.
+
+Para consultar também as linhas guardadas no SQLite dentro do contêiner:
+
+```powershell
+docker compose exec monitor python -c "import sqlite3; c=sqlite3.connect('/data/readings.sqlite3'); [print(r) for r in c.execute('SELECT device_id, temperature_c, timestamp, alert FROM readings ORDER BY id')]"
+```
+
+### Parar a demonstração
+
+Para parar os serviços sem apagar os dados:
+
+```powershell
 docker compose down
 ```
 
-Os dados ficam no volume Docker `medisus-iot-data`. Para descartá-los junto com o volume, execute `docker compose down --volumes`.
+As leituras ficam no volume Docker `medisus-iot-data`. Para parar os serviços **e apagar esse volume**, use:
 
-### Ajustar os limites da demonstração
-
-Edite `MIN_TEMP_C` e `MAX_TEMP_C` no serviço `monitor` em `docker-compose.yml` e recrie o serviço:
-
-```sh
-docker compose up -d --build --force-recreate monitor
+```powershell
+docker compose down --volumes
 ```
 
-Os valores `2` e `8` existem exclusivamente para tornar a demonstração visível. Não os use como parâmetros de operação clínica.
+## Executar os testes
 
-## Executar testes localmente
+Os testes cobrem a validação de payloads, a interpretação de limites e o registro de leituras no SQLite. Eles usam a biblioteca padrão do Python e não precisam de um broker MQTT.
 
-Os testes usam apenas a biblioteca padrão do Python:
+**Windows PowerShell:**
 
 ```powershell
 $env:PYTHONPATH = "src"
 python -m unittest discover -s tests -v
 ```
 
-No Linux/macOS, use `PYTHONPATH=src python -m unittest discover -s tests -v`.
+## Configuração da demonstração
 
-Para executar o monitor fora do Compose, instale as dependências em um ambiente virtual e configure o endereço do broker:
+Os valores demonstrativos estão declarados no serviço `monitor` em `docker-compose.yml`:
 
-```sh
-python -m venv .venv
-# Windows:
-.venv\Scripts\activate
-# Linux/macOS:
-# source .venv/bin/activate
-pip install -r requirements.txt
+```yaml
+MIN_TEMP_C: "2"
+MAX_TEMP_C: "8"
 ```
 
-No PowerShell:
+Para experimentar outros valores, altere essas variáveis e recrie o serviço:
 
 ```powershell
-$env:MQTT_HOST = "localhost"
-python -m medisus_iot.monitor
+docker compose up -d --force-recreate monitor
 ```
 
-## ESP32 e DS18B20
+O serviço rejeita uma configuração em que o limite mínimo não seja menor que o máximo. Os limites alterados continuam sendo apenas valores de teste; não os use para orientar o armazenamento real de medicamentos.
 
-Conexão de referência para um módulo DS18B20:
+## Integração de referência: ESP32 e DS18B20
+
+O sketch está em `firmware/esp32_ds18b20/esp32_ds18b20.ino`. Ele usa as bibliotecas `PubSubClient`, `OneWire` e `DallasTemperature`, além das bibliotecas de Wi-Fi e horário do ESP32.
+
+Ligação de referência:
 
 | DS18B20 | ESP32 |
 |---|---|
@@ -85,22 +180,22 @@ Conexão de referência para um módulo DS18B20:
 | GND | GND |
 | DATA | GPIO 4 |
 
-Use um resistor de pull-up de 4,7 kΩ entre DATA e 3V3. Confira a pinagem da placa e do sensor utilizados antes de conectar.
+Use um resistor pull-up de **4,7 kΩ** entre DATA e 3V3. Confirme a pinagem da placa e do sensor antes de montar o circuito.
 
-Abra `firmware/esp32_ds18b20/esp32_ds18b20.ino`, instale as bibliotecas listadas nos comentários e preencha as configurações de Wi-Fi e broker no próprio dispositivo. Os valores do sketch são placeholders, não credenciais. O firmware publica JSON no mesmo tópico consumido pelo serviço. Para a demonstração local, o broker não usa TLS nem autenticação; não exponha essa configuração em uma rede não confiável.
+Antes de carregar o sketch:
 
-O firmware e o circuito não foram testados em hardware real. A simulação via Compose é independente do ESP32.
+1. Instale as bibliotecas listadas no comentário inicial do arquivo.
+2. Preencha `WIFI_SSID`, `WIFI_PASSWORD` e `MQTT_SERVER` no dispositivo. Os valores existentes são exemplos/placeholders, não credenciais reais.
+3. Configure `MQTT_SERVER` com o endereço de rede do computador que executa o broker. No ESP32, `localhost` apontaria para o próprio dispositivo, não para o computador.
+4. Conecte o ESP32 e o computador à mesma rede acessível e inicie o broker.
 
-## Evidências para apresentação
+O sketch tenta sincronizar o horário por NTP para publicar o campo `timestamp` no formato esperado pelo serviço. O broker local de demonstração não usa TLS nem autenticação: mantenha-o em uma rede confiável e não exponha a porta `1883` à internet.
 
-1. Capture os serviços iniciados (`docker compose ps`).
-2. Mostre a execução do simulador e as mensagens de leitura/alerta (`docker compose logs monitor`).
-3. Se houver hardware, registre uma foto do ESP32 e da ligação do DS18B20, sem incluir senhas, tokens ou dados pessoais.
-4. Identifique claramente quais evidências são simuladas e quais foram obtidas em hardware. Não apresente leituras sintéticas como medições reais.
+**Atenção:** o firmware e a ligação são documentação de referência, não uma integração verificada. O fluxo recomendado para apresentação é usar o simulador.
 
-## Formato MQTT
+## Formato das mensagens
 
-O serviço assina `medisus/ubs/+/temperatura`. Cada payload deve conter:
+O serviço assina o tópico `medisus/ubs/+/temperatura`. Uma mensagem válida tem este formato:
 
 ```json
 {
@@ -110,11 +205,48 @@ O serviço assina `medisus/ubs/+/temperatura`. Cada payload deve conter:
 }
 ```
 
-`temperature_c` precisa ser um número finito dentro da faixa física do DS18B20 (-55 °C a 125 °C); `timestamp` deve ser ISO 8601 com fuso horário. Payloads inválidos são rejeitados e registrados no log, sem interromper o monitor.
+O serviço verifica se:
 
-## Limitações
+- o payload é um objeto JSON;
+- `device_id` é um identificador de texto não vazio;
+- `temperature_c` é um número finito dentro da faixa do DS18B20 (-55 °C a 125 °C);
+- `timestamp` é uma data ISO 8601 com fuso horário.
 
-- Demonstração acadêmica; sem calibração, redundância, retenção validada, autenticação ou transporte MQTT criptografado.
-- O SQLite e o alerta em log não são um sistema de notificação nem uma garantia de entrega.
-- A qualidade da medição depende de instalação, sensor, calibração e condições ambientais que não são avaliadas aqui.
-- Limites de armazenamento devem ser obtidos para cada produto em fontes oficiais aplicáveis.
+Payloads inválidos são rejeitados e descritos nos logs; não são gravados como leituras válidas.
+
+## Estrutura do repositório
+
+```text
+.
+├── docker-compose.yml            # Broker, serviço e perfil do simulador
+├── Dockerfile                    # Imagem do serviço Python
+├── mosquitto/mosquitto.conf      # Configuração local do broker MQTT
+├── src/medisus_iot/
+│   ├── monitor.py                # Assinatura MQTT, alertas e coordenação
+│   ├── readings.py               # Validação e avaliação dos limites
+│   ├── simulator.py              # Publicação de dados sintéticos
+│   └── storage.py                # Persistência SQLite
+├── firmware/esp32_ds18b20/       # Sketch de referência para ESP32
+└── tests/                        # Testes automatizados
+```
+
+## Evidências para apresentar
+
+Uma apresentação pode mostrar:
+
+1. `docker compose ps`, para identificar os serviços em execução.
+2. A execução do simulador, que imprime os payloads sintéticos publicados.
+3. `docker compose logs --no-color monitor`, para mostrar leituras válidas e o alerta demonstrativo.
+4. A consulta SQLite acima, para mostrar os registros persistidos.
+5. Se o protótipo físico for montado, uma foto da ligação, identificada como **evidência de hardware**.
+
+Deixe claro quais resultados vieram do simulador e quais, se houver, vieram de medições físicas. Não apresente leituras sintéticas como medições reais.
+
+## Limitações e uso responsável
+
+- O projeto demonstra fluxo de software; não realiza calibração nem avalia a instalação do sensor.
+- SQLite e logs são adequados para demonstração, não para garantir operação, retenção ou resposta em produção.
+- O broker de demonstração não tem autenticação nem criptografia de transporte.
+- Não há painel visual, notificações externas nem lógica de contingência.
+- Temperaturas aceitáveis dependem do produto e devem ser determinadas por documentação oficial aplicável.
+- Este protótipo não substitui equipamentos, processos ou validações exigidos para armazenamento real.

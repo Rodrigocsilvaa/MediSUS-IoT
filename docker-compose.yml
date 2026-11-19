@@ -1,0 +1,45 @@
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    healthcheck:
+      test: ["CMD", "mosquitto_sub", "-h", "localhost", "-t", "$$SYS/broker/version", "-C", "1", "-W", "3"]
+      interval: 5s
+      timeout: 4s
+      retries: 10
+
+  monitor:
+    build: .
+    command: ["python", "-m", "medisus_iot.monitor"]
+    environment:
+      MQTT_HOST: mosquitto
+      MQTT_PORT: "1883"
+      MQTT_TOPIC: medisus/ubs/+/temperatura
+      MIN_TEMP_C: "2"
+      MAX_TEMP_C: "8"
+      DATABASE_PATH: /data/readings.sqlite3
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+    volumes:
+      - medisus-iot-data:/data
+    restart: unless-stopped
+
+  simulator:
+    build: .
+    command: ["python", "-m", "medisus_iot.simulator"]
+    environment:
+      MQTT_HOST: mosquitto
+      MQTT_PORT: "1883"
+      MQTT_TOPIC: medisus/ubs/demo/temperatura
+      SIMULATOR_INTERVAL_SECONDS: "1"
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+    profiles: ["demo"]
+
+volumes:
+  medisus-iot-data:

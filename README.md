@@ -21,14 +21,14 @@ Este projeto demonstra como uma leitura de temperatura pode sair de um sensor, p
 
 ## Baixar o código no Windows
 
-Abra o PowerShell e clone a branch que contém este protótipo:
+Abra o PowerShell e clone o repositório. O projeto está na branch padrão `main`:
 
 ```powershell
-git clone --branch rodrigocsilvaa-iot-prototype https://github.com/Rodrigocsilvaa/MediSUS-IoT.git
+git clone https://github.com/Rodrigocsilvaa/MediSUS-IoT.git
 Set-Location MediSUS-IoT
 ```
 
-O código também pode ser consultado diretamente na [página do projeto no GitHub](https://github.com/Rodrigocsilvaa/MediSUS-IoT/tree/rodrigocsilvaa-iot-prototype).
+O código também pode ser consultado diretamente na [página do projeto no GitHub](https://github.com/Rodrigocsilvaa/MediSUS-IoT).
 
 ## Abrir e executar pelo VS Code
 
@@ -196,7 +196,25 @@ python -m unittest discover -s tests -v
 
 ## Evidências e avaliação
 
-Os logs, capturas de tela, casos de teste, resultados e limitações estão em [`evidence/EVIDENCIAS.md`](evidence/EVIDENCIAS.md). As temperaturas mostradas são sintéticas. A documentação separa os testes locais realizados das etapas que ainda dependem de execução via Docker Compose e de uma chave válida para testar a API real de IA.
+As capturas abaixo mostram os principais resultados. **Todas as temperaturas são sintéticas**, e os testes da IA usam respostas simuladas.
+
+### Testes automatizados
+
+![Saída dos 12 testes automatizados](evidence/prints/T01_testes_unitarios.png)
+
+### Leituras sintéticas do simulador
+
+![Quatro leituras sintéticas publicadas pelo simulador](evidence/prints/T02_simulador.png)
+
+### Alertas gerados pelas regras do serviço
+
+![Leituras dentro e fora dos limites demonstrativos](evidence/prints/T03_logs_alerta.png)
+
+### Leituras persistidas no SQLite
+
+![Cinco leituras sintéticas persistidas, com duas marcadas como alerta](evidence/prints/T04_sqlite_leituras.png)
+
+Os demais casos, logs completos, resultados, critérios e limitações estão em [`evidence/EVIDENCIAS.md`](evidence/EVIDENCIAS.md). A demonstração Docker Compose completa e a chamada real à API de IA ainda estão pendentes; os testes de configuração e os testes simulados da IA não substituem essas execuções.
 
 ## Configuração da demonstração
 

@@ -50,6 +50,7 @@ Não é necessária uma extensão do VS Code para rodar a demonstração com Doc
 
 - [O que o projeto demonstra](#o-que-o-projeto-demonstra)
 - [Como os componentes se conectam](#como-os-componentes-se-conectam)
+- [Tecnologias e justificativas](#tecnologias-e-justificativas)
 - [Abrir e executar pelo VS Code](#abrir-e-executar-pelo-vs-code)
 - [Executar a demonstração](#início-rápido-execute-a-demonstração)
 - [Gerar um resumo com IA](#gerar-um-resumo-com-ia)
@@ -85,6 +86,17 @@ flowchart LR
 ```
 
 Na demonstração rápida, o simulador ocupa o lugar do sensor e do ESP32. O firmware é uma referência de integração futura.
+
+## Tecnologias e justificativas
+
+| Tecnologia ou modelo | Uso no projeto | Justificativa e limite |
+|---|---|---|
+| ESP32 + DS18B20 | Referência de aquisição e envio da temperatura | O ESP32 pode se conectar à rede Wi-Fi e o DS18B20 fornece leitura digital por 1-Wire. O firmware é apenas uma referência; não foi testado em hardware. |
+| MQTT + Mosquitto | Transporte das leituras entre publicador e serviço | O modelo publish/subscribe separa o sensor do monitor e é adequado para mensagens pequenas de telemetria. Mosquitto permite demonstrar esse fluxo localmente. |
+| Python + Paho MQTT | Serviço de validação, registro e alerta | Mantém a lógica da demonstração simples e permite testar parsing, regras e consumo MQTT. |
+| SQLite | Persistência local de leituras e alertas | Não exige um servidor de banco separado, o que simplifica a instalação acadêmica. A conexão é protegida por lock para gravações do callback MQTT; a configuração não é indicada para escala ou operação clínica. |
+| OpenAI Chat Completions API, modelo `gpt-4.1-mini` | Resumo opcional em português das últimas leituras | Um modelo generativo facilita explicar os resultados em linguagem natural. O modelo pode ser alterado por `OPENAI_MODEL`; a resposta é informativa, pode errar e não decide alertas nem dá orientação clínica. A chamada real exige chave e pode gerar cobrança. |
+| Simulador Python | Publicação dos quatro valores sintéticos da demonstração | Torna o fluxo reproduzível sem placa ou sensor. As leituras são artificiais e não representam medições. |
 
 ## O que você precisa
 
@@ -146,16 +158,17 @@ docker compose exec monitor python -c "import sqlite3; c=sqlite3.connect('/data/
 
 Depois de executar o simulador, você pode pedir à IA que resuma as últimas leituras. A integração usa a API da OpenAI e só é iniciada quando você executa este passo. Ela envia no máximo 20 leituras, contendo temperatura, horário e o alerta calculado; não envia o identificador do sensor.
 
-1. Crie um arquivo `.env` na pasta do projeto, por exemplo abrindo-o no Bloco de Notas:
+1. Copie a configuração de exemplo e abra o arquivo local:
 
    ```powershell
+   Copy-Item .env.example .env
    notepad .env
    ```
 
-2. Coloque nele a sua chave da API e salve:
+2. Coloque sua chave da API em `OPENAI_API_KEY` e salve. O modelo já vem preenchido:
 
    ```text
-   OPENAI_API_KEY=sua-chave-da-api
+   OPENAI_API_KEY=cole-sua-chave-aqui
    OPENAI_MODEL=gpt-4.1-mini
    ```
 
@@ -165,7 +178,7 @@ Depois de executar o simulador, você pode pedir à IA que resuma as últimas le
    docker compose --profile ai run --rm ai-summary
    ```
 
-O arquivo `.env` é ignorado pelo Git. **Não compartilhe nem envie esse arquivo ao repositório.** Use somente as leituras sintéticas da demonstração: não envie dados de pacientes, funcionários ou medições reais a um serviço externo. A resposta gerada pode conter erros; ela é apenas um resumo informativo e não deve orientar decisões clínicas. A classificação de alertas continua sendo feita pelo código, com limites demonstrativos.
+O arquivo `.env` é ignorado pelo Git; `.env.example` não contém credenciais. **Não compartilhe nem envie seu arquivo `.env` ao repositório.** Use somente as leituras sintéticas da demonstração: não envie dados de pacientes, funcionários ou medições reais a um serviço externo. A resposta gerada pode conter erros; ela é apenas um resumo informativo e não deve orientar decisões clínicas. A classificação de alertas continua sendo feita pelo código, com limites demonstrativos.
 
 ### Parar a demonstração
 
@@ -285,6 +298,8 @@ Payloads inválidos são rejeitados e descritos nos logs; não são gravados com
 .
 ├── docker-compose.yml            # Broker, serviço, simulador e perfil de IA
 ├── Dockerfile                    # Imagem do serviço Python
+├── requirements.txt              # Dependência do cliente MQTT em Python
+├── .env.example                  # Configuração de exemplo sem credenciais
 ├── mosquitto/mosquitto.conf      # Configuração local do broker MQTT
 ├── .github/workflows/tests.yml   # Execução automatizada dos testes no GitHub
 ├── evidence/                     # Logs, capturas e relatório de avaliação

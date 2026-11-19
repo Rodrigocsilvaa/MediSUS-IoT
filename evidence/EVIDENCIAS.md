@@ -34,7 +34,7 @@ Uma quinta leitura sintética, de 1.5 °C, foi publicada separadamente para test
 | T11 | Execução ponta a ponta em Docker Compose | Broker, serviço e simulador sobem juntos e produzem leituras/alertas | **Pendente de confirmação ponta a ponta.** Os logs locais T02–T06 demonstram o fluxo com broker local, não comprovam a execução dos contêineres via Compose. |
 | T12 | Resumo com chamada real à IA | Uma chamada autenticada retorna um resumo; a chave permanece privada | **Pendente.** Requer chave de API válida e pode gerar cobrança. Os testes mock T09 não substituem uma chamada real. |
 
-O workflow [`tests.yml`](../.github/workflows/tests.yml) está configurado para executar os testes unitários no GitHub Actions. Confira a aba **Actions** do repositório depois do push; a configuração do workflow, por si só, não é evidência de uma execução bem-sucedida.
+O workflow [`tests.yml`](../.github/workflows/tests.yml) executou com sucesso no GitHub Actions: [12 testes passaram no runner Windows](https://github.com/Rodrigocsilvaa/MediSUS-IoT/actions/runs/44631287322). Confira a aba **Actions** do repositório para execuções mais recentes.
 
 ## Interpretação
 
@@ -45,7 +45,7 @@ Os alertas são determinados por regras fixas no serviço. A IA generativa, quan
 ## Limitações e reprodução
 
 - Os valores 2 °C e 8 °C são parâmetros de demonstração, não orientação universal ou regulatória. Para qualquer produto real, limites devem ser obtidos em fonte oficial aplicável àquele produto.
-- As capturas e logs T02–T09 foram fornecidos pela equipe; T01 foi executado novamente neste workspace e T10 foi verificado no ambiente atual. T11 e T12 continuam explicitamente pendentes.
+- As capturas e logs T02–T09 foram fornecidos pela equipe; T01 foi executado novamente neste workspace e no GitHub Actions; T10 foi verificado no ambiente atual. T11 e T12 continuam explicitamente pendentes. O daemon Docker não está acessível neste workspace, portanto não foi possível confirmar a execução dos contêineres via Compose.
 - O sensor, o ESP32 e a ligação elétrica não foram testados em hardware.
 - O broker de demonstração permite conexões anônimas e não usa TLS. Não exponha a porta 1883 em uma rede não confiável.
 - O resumo por IA depende de uma API externa, pode custar dinheiro e pode produzir erros. Use somente dados sintéticos; nunca envie informações pessoais ou dados reais de saúde.

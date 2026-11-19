@@ -185,7 +185,7 @@ docker compose down --volumes
 
 Os testes cobrem a validação de payloads, a interpretação de limites, o registro de leituras e a integração com a IA usando uma resposta simulada. Eles usam a biblioteca padrão do Python, não precisam de um broker MQTT e **não fazem chamadas externas à API**.
 
-O GitHub Actions também executa automaticamente essa suíte ao enviar alterações para a branch ou abrir um pull request. O workflow está em `.github/workflows/tests.yml`. Na última execução registrada, os **12 testes passaram no runner Windows** ([ver execução](https://github.com/Rodrigocsilvaa/MediSUS-IoT/actions/runs/44631287322)).
+O GitHub Actions também executa automaticamente essa suíte ao enviar alterações para a branch ou abrir um pull request. O workflow está em `.github/workflows/tests.yml`. Na execução registrada, os **12 testes passaram no runner Windows** ([ver histórico das execuções](https://github.com/Rodrigocsilvaa/MediSUS-IoT/actions/workflows/tests.yml)).
 
 **Windows PowerShell:**
 

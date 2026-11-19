@@ -34,7 +34,7 @@ Uma quinta leitura sintética, de 1.5 °C, foi publicada separadamente para test
 | T11 | Execução ponta a ponta em Docker Compose | Broker, serviço e simulador sobem juntos e produzem leituras/alertas | **Pendente de confirmação ponta a ponta.** Os logs locais T02–T06 demonstram o fluxo com broker local, não comprovam a execução dos contêineres via Compose. |
 | T12 | Resumo com chamada real à IA | Uma chamada autenticada retorna um resumo; a chave permanece privada | **Pendente.** Requer chave de API válida e pode gerar cobrança. Os testes mock T09 não substituem uma chamada real. |
 
-O workflow [`tests.yml`](../.github/workflows/tests.yml) executou com sucesso no GitHub Actions: [12 testes passaram no runner Windows](https://github.com/Rodrigocsilvaa/MediSUS-IoT/actions/runs/44631287322). Confira a aba **Actions** do repositório para execuções mais recentes.
+O workflow [`tests.yml`](../.github/workflows/tests.yml) executou com sucesso no GitHub Actions: 12 testes passaram no runner Windows. Consulte o [histórico das execuções](https://github.com/Rodrigocsilvaa/MediSUS-IoT/actions/workflows/tests.yml).
 
 ## Interpretação
 

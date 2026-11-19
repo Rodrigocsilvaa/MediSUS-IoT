@@ -41,5 +41,19 @@ services:
         condition: service_healthy
     profiles: ["demo"]
 
+  ai-summary:
+    build: .
+    command: ["python", "-m", "medisus_iot.ai_summary"]
+    environment:
+      DATABASE_PATH: /data/readings.sqlite3
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini}
+    depends_on:
+      monitor:
+        condition: service_started
+    volumes:
+      - medisus-iot-data:/data
+    profiles: ["ai"]
+
 volumes:
   medisus-iot-data:

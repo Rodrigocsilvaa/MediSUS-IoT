@@ -24,6 +24,25 @@ class ReadingStoreTests(unittest.TestCase):
                 connection.close()
             self.assertEqual(row, ("sensor-1", 8.5, 1))
 
+    def test_latest_readings_are_chronological_and_do_not_include_device_id(self):
+        store = ReadingStore(":memory:")
+        store.record(Reading("private-device-name", 4.5, "2026-01-01T12:00:00+00:00"), False)
+        store.record(Reading("private-device-name", 8.5, "2026-01-01T12:01:00+00:00"), True)
+
+        latest = store.latest_readings(limit=1)
+
+        self.assertEqual(
+            latest,
+            [
+                {
+                    "temperature_c": 8.5,
+                    "timestamp": "2026-01-01T12:01:00+00:00",
+                    "alert": True,
+                }
+            ],
+        )
+        store.close()
+
 
 if __name__ == "__main__":
     unittest.main()

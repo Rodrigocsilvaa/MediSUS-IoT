@@ -34,5 +34,22 @@ class ReadingStore:
                 (reading.device_id, reading.temperature_c, reading.timestamp, int(alert)),
             )
 
+    def latest_readings(self, limit: int = 20) -> list[dict[str, str | float | bool]]:
+        if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 100:
+            raise ValueError("limit must be an integer from 1 to 100")
+        rows = self._connection.execute(
+            """
+            SELECT temperature_c, timestamp, alert
+            FROM readings
+            ORDER BY id DESC
+            LIMIT ?
+            """,
+            (limit,),
+        ).fetchall()
+        return [
+            {"temperature_c": row[0], "timestamp": row[1], "alert": bool(row[2])}
+            for row in reversed(rows)
+        ]
+
     def close(self) -> None:
         self._connection.close()

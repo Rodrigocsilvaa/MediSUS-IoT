@@ -42,6 +42,7 @@ Não é necessária uma extensão do VS Code para rodar a demonstração com Doc
 - [Como os componentes se conectam](#como-os-componentes-se-conectam)
 - [Abrir e executar pelo VS Code](#abrir-e-executar-pelo-vs-code)
 - [Executar a demonstração](#início-rápido-execute-a-demonstração)
+- [Gerar um resumo com IA](#gerar-um-resumo-com-ia)
 - [Executar os testes](#executar-os-testes)
 - [Integração de referência ESP32 e DS18B20](#integração-de-referência-esp32-e-ds18b20)
 - [Formato das mensagens](#formato-das-mensagens)
@@ -54,8 +55,9 @@ Não é necessária uma extensão do VS Code para rodar a demonstração com Doc
 - Um **serviço Python** valida cada leitura, compara a temperatura com os limites configurados e grava os dados em SQLite.
 - Quando a temperatura fica fora do intervalo configurado, o serviço marca a leitura como alerta e a destaca nos logs.
 - Um **simulador** substitui o sensor físico na demonstração e envia apenas dados sintéticos.
+- Um **resumidor com IA generativa**, executado sob demanda, cria um resumo em português das últimas leituras e dos alertas registrados.
 
-O alerta é demonstrativo: aparece nos logs e no registro SQLite. Não é uma notificação para uma pessoa nem uma garantia de resposta a uma situação real.
+O alerta é demonstrativo: aparece nos logs e no registro SQLite. Não é uma notificação para uma pessoa nem uma garantia de resposta a uma situação real. A IA resume os alertas já calculados pelas regras do serviço; ela não define limites nem decide se um medicamento está adequado.
 
 ## Como os componentes se conectam
 
@@ -68,6 +70,7 @@ flowchart LR
     P --> V["Validação e comparação<br/>com limites configurados"]
     V --> DB[("SQLite<br/>leituras e alertas")]
     V --> LOG["Logs<br/>leitura ou alerta"]
+    DB --> AI["Resumo opcional<br/>OpenAI"]
 ```
 
 Na demonstração rápida, o simulador ocupa o lugar do sensor e do ESP32. O firmware é uma referência de integração futura.
@@ -80,6 +83,8 @@ Para executar a demonstração:
 - Docker Compose v2 (incluído nas versões atuais do Docker Desktop).
 
 Para executar os testes localmente, também é necessário Python 3.10 ou superior. A conexão do ESP32 é opcional e exige placa, sensor e Arduino IDE ou PlatformIO.
+
+O resumo com IA é opcional e requer uma chave de API da OpenAI, acesso à internet e uma conta com acesso à API. O uso da API pode gerar cobrança conforme a conta e o modelo. A chave não está incluída no projeto.
 
 ## Início rápido: execute a demonstração
 
@@ -126,6 +131,31 @@ Para consultar também as linhas guardadas no SQLite dentro do contêiner:
 docker compose exec monitor python -c "import sqlite3; c=sqlite3.connect('/data/readings.sqlite3'); [print(r) for r in c.execute('SELECT device_id, temperature_c, timestamp, alert FROM readings ORDER BY id')]"
 ```
 
+### Gerar um resumo com IA
+
+Depois de executar o simulador, você pode pedir à IA que resuma as últimas leituras. A integração usa a API da OpenAI e só é iniciada quando você executa este passo. Ela envia no máximo 20 leituras, contendo temperatura, horário e o alerta calculado; não envia o identificador do sensor.
+
+1. Crie um arquivo `.env` na pasta do projeto, por exemplo abrindo-o no Bloco de Notas:
+
+   ```powershell
+   notepad .env
+   ```
+
+2. Coloque nele a sua chave da API e salve:
+
+   ```text
+   OPENAI_API_KEY=sua-chave-da-api
+   OPENAI_MODEL=gpt-4.1-mini
+   ```
+
+3. Execute o resumidor:
+
+   ```powershell
+   docker compose --profile ai run --rm ai-summary
+   ```
+
+O arquivo `.env` é ignorado pelo Git. **Não compartilhe nem envie esse arquivo ao repositório.** Use somente as leituras sintéticas da demonstração: não envie dados de pacientes, funcionários ou medições reais a um serviço externo. A resposta gerada pode conter erros; ela é apenas um resumo informativo e não deve orientar decisões clínicas. A classificação de alertas continua sendo feita pelo código, com limites demonstrativos.
+
 ### Parar a demonstração
 
 Para parar os serviços sem apagar os dados:
@@ -142,7 +172,7 @@ docker compose down --volumes
 
 ## Executar os testes
 
-Os testes cobrem a validação de payloads, a interpretação de limites e o registro de leituras no SQLite. Eles usam a biblioteca padrão do Python e não precisam de um broker MQTT.
+Os testes cobrem a validação de payloads, a interpretação de limites, o registro de leituras e a integração com a IA usando uma resposta simulada. Eles usam a biblioteca padrão do Python, não precisam de um broker MQTT e **não fazem chamadas externas à API**.
 
 **Windows PowerShell:**
 
@@ -218,16 +248,20 @@ Payloads inválidos são rejeitados e descritos nos logs; não são gravados com
 
 ```text
 .
-├── docker-compose.yml            # Broker, serviço e perfil do simulador
+├── docker-compose.yml            # Broker, serviço, simulador e perfil de IA
 ├── Dockerfile                    # Imagem do serviço Python
 ├── mosquitto/mosquitto.conf      # Configuração local do broker MQTT
 ├── src/medisus_iot/
 │   ├── monitor.py                # Assinatura MQTT, alertas e coordenação
 │   ├── readings.py               # Validação e avaliação dos limites
 │   ├── simulator.py              # Publicação de dados sintéticos
+│   ├── ai_summary.py             # Resumo generativo sob demanda
 │   └── storage.py                # Persistência SQLite
 ├── firmware/esp32_ds18b20/       # Sketch de referência para ESP32
-└── tests/                        # Testes automatizados
+└── tests/
+    ├── test_ai_summary.py        # Testes da integração de IA sem chamada externa
+    ├── test_readings.py          # Testes de validação e alertas
+    └── test_storage.py           # Testes da persistência SQLite
 ```
 
 ## Evidências para apresentar
@@ -238,7 +272,8 @@ Uma apresentação pode mostrar:
 2. A execução do simulador, que imprime os payloads sintéticos publicados.
 3. `docker compose logs --no-color monitor`, para mostrar leituras válidas e o alerta demonstrativo.
 4. A consulta SQLite acima, para mostrar os registros persistidos.
-5. Se o protótipo físico for montado, uma foto da ligação, identificada como **evidência de hardware**.
+5. O resumo gerado pela IA, se a integração opcional for executada; não mostre a chave da API.
+6. Se o protótipo físico for montado, uma foto da ligação, identificada como **evidência de hardware**.
 
 Deixe claro quais resultados vieram do simulador e quais, se houver, vieram de medições físicas. Não apresente leituras sintéticas como medições reais.
 
@@ -247,6 +282,7 @@ Deixe claro quais resultados vieram do simulador e quais, se houver, vieram de m
 - O projeto demonstra fluxo de software; não realiza calibração nem avalia a instalação do sensor.
 - SQLite e logs são adequados para demonstração, não para garantir operação, retenção ou resposta em produção.
 - O broker de demonstração não tem autenticação nem criptografia de transporte.
+- O resumo usa uma API externa e pode apresentar erros; não é uma avaliação clínica.
 - Não há painel visual, notificações externas nem lógica de contingência.
 - Temperaturas aceitáveis dependem do produto e devem ser determinadas por documentação oficial aplicável.
 - Este protótipo não substitui equipamentos, processos ou validações exigidos para armazenamento real.

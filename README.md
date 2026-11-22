@@ -51,6 +51,7 @@ Não é necessária uma extensão do VS Code para rodar a demonstração com Doc
 - [O que o projeto demonstra](#o-que-o-projeto-demonstra)
 - [Como os componentes se conectam](#como-os-componentes-se-conectam)
 - [Tecnologias e justificativas](#tecnologias-e-justificativas)
+- [Guia de estudo para a apresentação](#guia-de-estudo-para-a-apresentação)
 - [Abrir e executar pelo VS Code](#abrir-e-executar-pelo-vs-code)
 - [Executar a demonstração](#início-rápido-execute-a-demonstração)
 - [Gerar um resumo com IA](#gerar-um-resumo-com-ia)
@@ -70,6 +71,10 @@ Não é necessária uma extensão do VS Code para rodar a demonstração com Doc
 - Um **resumidor com IA generativa**, executado sob demanda, cria um resumo em português das últimas leituras e dos alertas registrados.
 
 O alerta é demonstrativo: aparece nos logs e no registro SQLite. Não é uma notificação para uma pessoa nem uma garantia de resposta a uma situação real. A IA resume os alertas já calculados pelas regras do serviço; ela não define limites nem decide se um medicamento está adequado.
+
+## Guia de estudo para a apresentação
+
+Para revisar o fluxo, os termos técnicos, as escolhas, as limitações e perguntas prováveis, consulte o [Guia de estudo para a apresentação](GUIA_DE_ESTUDO.md).
 
 ## Como os componentes se conectam
 
@@ -297,6 +302,7 @@ Payloads inválidos são rejeitados e descritos nos logs; não são gravados com
 ```text
 .
 ├── docker-compose.yml            # Broker, serviço, simulador e perfil de IA
+├── GUIA_DE_ESTUDO.md             # Explicação do projeto e apoio para apresentação
 ├── Dockerfile                    # Imagem do serviço Python
 ├── requirements.txt              # Dependência do cliente MQTT em Python
 ├── .env.example                  # Configuração de exemplo sem credenciais

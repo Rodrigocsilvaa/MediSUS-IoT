@@ -21,8 +21,6 @@ Na proposta MediSUS, o paciente fotografa uma receita, a IA identifica os medica
 | Samara Vilela | RM566133 |
 | Otávio Ferreira | RM565960 |
 
-Os nomes acima são os informados pela equipe. Antes de entregar, confirmem se correspondem aos nomes completos do cadastro acadêmico.
-
 ## Baixar o código no Windows
 
 Abra o PowerShell e clone o repositório. O projeto está na branch padrão `main`:
@@ -57,8 +55,6 @@ Não é necessária uma extensão do VS Code para rodar a demonstração com Doc
 - [Como os componentes se conectam](#como-os-componentes-se-conectam)
 - [Tecnologias e justificativas](#tecnologias-e-justificativas)
 - [Guia de estudo para a apresentação](#guia-de-estudo-para-a-apresentação)
-- [Checklist para a equipe](#checklist-para-a-equipe)
-- [Checklist para a equipe](#checklist-para-a-equipe)
 - [Abrir e executar pelo VS Code](#abrir-e-executar-pelo-vs-code)
 - [Executar a demonstração](#início-rápido-execute-a-demonstração)
 - [Gerar um resumo com IA](#gerar-um-resumo-com-ia)
@@ -95,10 +91,6 @@ Uma integração futura poderia relacionar cada leitura a um produto e a uma UBS
 ## Guia de estudo para a apresentação
 
 Para revisar o fluxo, os termos técnicos, as escolhas, as limitações e perguntas prováveis, consulte o [Guia de estudo para a apresentação](GUIA_DE_ESTUDO.md).
-
-## Checklist para a equipe
-
-O [checklist de estudo e apresentação](CHECKLIST_APRESENTACAO.md) organiza o que cada integrante deve revisar, o que demonstrar e como explicar corretamente a relação entre o MediSUS e este módulo IoT.
 
 ## Como os componentes se conectam
 
@@ -258,12 +250,6 @@ As capturas abaixo mostram os principais resultados. **Todas as temperaturas sã
 
 Os demais casos, logs completos, resultados, critérios e limitações estão em [`evidence/EVIDENCIAS.md`](evidence/EVIDENCIAS.md). A demonstração completa via Docker Compose foi executada no computador da equipe: o broker iniciou, quatro leituras foram publicadas e o alerta para `8.3 °C` apareceu no log. O resumo com IA também tem testes automatizados simulados; uma chamada real à API ainda requer chave válida e pode gerar cobrança.
 
-## Entrega no Portal — disciplina de IoT
-
-O material da disciplina **Disruptive Architectures: IoT, IoB & Generative IA** especifica o repositório com código, dependências, configurações de exemplo sem credenciais, README e evidências. Para o formato de entrega, pede **um arquivo `.txt`** com o RM e o nome completo de cada integrante e o link do repositório.
-
-O arquivo [`link_repositorio_iot.txt`](link_repositorio_iot.txt) está incluído como modelo preenchido com os nomes e RMs informados pela equipe. Antes de enviar, confirmem se os nomes correspondem aos **nomes completos** cadastrados na FIAP; corrijam no `.txt`, se necessário. Depois, anexem o `.txt` na entrega dessa disciplina no Portal. O GitHub e o Portal são etapas diferentes: colocar o arquivo no repositório não o envia ao Portal.
-
 ## Configuração da demonstração
 
 Os valores demonstrativos estão declarados no serviço `monitor` em `docker-compose.yml`:
@@ -333,8 +319,6 @@ Payloads inválidos são rejeitados e descritos nos logs; não são gravados com
 .
 ├── docker-compose.yml            # Broker, serviço, simulador e perfil de IA
 ├── GUIA_DE_ESTUDO.md             # Explicação do projeto e apoio para apresentação
-├── CHECKLIST_APRESENTACAO.md     # Plano de revisão e preparação do grupo
-├── link_repositorio_iot.txt      # Identificação da equipe e link para enviar no Portal
 ├── Dockerfile                    # Imagem do serviço Python
 ├── requirements.txt              # Dependência do cliente MQTT em Python
 ├── .env.example                  # Configuração de exemplo sem credenciais

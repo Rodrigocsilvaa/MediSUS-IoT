@@ -173,6 +173,6 @@ O material de orientação da Global Solution pede que o uso de IA generativa se
 
 Cada integrante deve estudar o suficiente para explicar e responder perguntas sobre o que a equipe apresenta. Não afirmem que o protótipo físico ou a chamada real da IA foram testados se isso não aconteceu.
 
-## Próximo passo para o estudo da equipe
+## Como usar este guia
 
-Use também o [checklist de estudo e apresentação](CHECKLIST_APRESENTACAO.md), que resume em ordem o que revisar e o que mostrar.
+Este é o material de estudo da equipe: explica a arquitetura, o caminho das leituras, a demonstração, a IA, as limitações e como pensar em mudanças de requisito. O objetivo é compreender e explicar o projeto com as próprias palavras, não decorar o texto.

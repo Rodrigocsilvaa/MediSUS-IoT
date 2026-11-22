@@ -1,15 +1,13 @@
 # MediSUS IoT
 
-### Módulo IoT complementar para a proposta MediSUS
+### Módulo IoT para apoio à saúde pública
 
-Na proposta MediSUS, o paciente fotografa uma receita, a IA identifica os medicamentos e a plataforma ajuda a encontrar UBS próximas com estoque e informa sobre a Farmácia Popular. Este repositório **não implementa esse fluxo principal**: ele contém um protótipo acadêmico complementar para demonstrar o monitoramento da temperatura de armazenamento de medicamentos em uma UBS.
+Na visão do MediSUS, a tecnologia pode facilitar o acesso da população aos medicamentos da rede pública. Este projeto explora um recorte IoT desse contexto CitizenTech: acompanhar a temperatura de armazenamento de medicamentos em uma Unidade Básica de Saúde (UBS), apoiando a observação das condições de armazenamento.
 
 **O projeto funciona sem placa ou sensor:** um simulador publica leituras sintéticas para que qualquer pessoa possa executar e observar o fluxo completo usando Docker Compose.
 
 > [!IMPORTANT]
-> Este módulo **ainda não está integrado** ao aplicativo MediSUS, à leitura de receitas, ao estoque das UBS ou à Farmácia Popular. Ele não identifica medicamentos, confirma disponibilidade nem indica se um item deve aparecer na busca do paciente. A relação é complementar: monitorar condições de armazenamento poderia apoiar uma futura integração com o estoque, mas isso não existe nesta versão.
->
-> Este é um protótipo acadêmico. Os limites padrão de **2 °C a 8 °C são apenas parâmetros de demonstração** — não são recomendação médica, regra universal ou orientação regulatória. Em qualquer aplicação real, os limites devem vir de uma fonte oficial aplicável ao produto específico. O sketch e o circuito não foram validados em hardware.
+> Este protótipo acadêmico usa leituras sintéticas. Os limites padrão de **2 °C a 8 °C são parâmetros de demonstração**, não uma recomendação médica ou regulatória. Em uma aplicação real, os limites devem vir de uma fonte oficial aplicável ao produto. O ESP32 e o circuito são referências e não foram validados em hardware.
 
 ## Equipe
 
@@ -51,7 +49,7 @@ Não é necessária uma extensão do VS Code para rodar a demonstração com Doc
 ## Navegação
 
 - [O que o projeto demonstra](#o-que-o-projeto-demonstra)
-- [Como o módulo IoT se relaciona com o MediSUS](#como-o-módulo-iot-se-relaciona-com-o-medisus)
+- [Relação com MediSUS e CitizenTech](#relação-com-medisus-e-citizentech)
 - [Como os componentes se conectam](#como-os-componentes-se-conectam)
 - [Tecnologias e justificativas](#tecnologias-e-justificativas)
 - [Guia de estudo para a apresentação](#guia-de-estudo-para-a-apresentação)
@@ -75,18 +73,13 @@ Não é necessária uma extensão do VS Code para rodar a demonstração com Doc
 
 O alerta é demonstrativo: aparece nos logs e no registro SQLite. Não é uma notificação para uma pessoa nem uma garantia de resposta a uma situação real. A IA resume os alertas já calculados pelas regras do serviço; ela não define limites nem decide se um medicamento está adequado.
 
-## Como o módulo IoT se relaciona com o MediSUS
+## Relação com MediSUS e CitizenTech
 
-A proposta maior do MediSUS ajuda o paciente a identificar medicamentos a partir da receita e a encontrar unidades com disponibilidade. Este protótipo IoT trabalha em outro ponto do mesmo contexto: **acompanhar a temperatura de armazenamento na UBS**.
+CitizenTech aplica tecnologia para apoiar serviços e necessidades da população. No contexto do MediSUS, o monitoramento de temperatura explora como a IoT pode contribuir para o acompanhamento das condições de armazenamento de medicamentos em UBS.
 
-Essa relação é uma possibilidade de complemento, não uma integração pronta. Nesta versão:
+Na demonstração, um simulador envia leituras pelo MQTT; um serviço Python valida os dados, compara com parâmetros de demonstração, registra as leituras no SQLite e sinaliza valores fora do intervalo. Esse fluxo mostra uma forma de observar dados de armazenamento em um serviço público de saúde.
 
-- não há câmera, leitura de receita ou reconhecimento de medicamentos;
-- não há consulta ao estoque, busca de UBS ou integração com a Farmácia Popular;
-- não há identificador de produto associado à leitura de temperatura;
-- o módulo não envia ao MediSUS um status de estoque ou de condição do medicamento.
-
-Uma integração futura poderia relacionar cada leitura a um produto e a uma UBS e disponibilizar esse estado ao serviço de estoque por uma API. Só então o MediSUS poderia considerar essa informação no fluxo de disponibilidade. Isso exigiria regras e validações próprias; **não se deve concluir que uma leitura dentro do intervalo de demonstração comprova a segurança de um medicamento**.
+Os limites são somente demonstrativos e uma leitura dentro deles não comprova a segurança de um medicamento. Para uso real, seriam necessárias validações técnicas e critérios oficiais específicos para cada produto.
 
 ## Guia de estudo para a apresentação
 

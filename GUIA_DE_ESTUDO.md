@@ -4,17 +4,15 @@ Este guia explica o protótipo com palavras simples para ajudar a equipe a compr
 
 > **Apresente com honestidade:** a demonstração usa leituras sintéticas do simulador. O ESP32 e o DS18B20 aparecem como referência de integração, mas não foram testados em hardware. Os limites de 2 °C e 8 °C são apenas parâmetros de demonstração. A IA resume leituras sob demanda; não calcula os alertas. Os testes automatizados da IA usam uma resposta simulada. Uma chamada real à API exige uma chave válida e pode gerar cobrança.
 
-## 1. A ideia do MediSUS e o escopo deste repositório
+## 1. A ideia do MediSUS e a contribuição IoT
 
-A proposta maior do MediSUS ajuda o paciente a fotografar uma receita, identificar medicamentos e encontrar UBS próximas com estoque, incluindo informação sobre a Farmácia Popular.
+O MediSUS busca facilitar o acesso da população aos medicamentos da rede pública, conectando tecnologia e serviços de saúde.
 
-Este repositório **não implementa essas funções**. Ele demonstra um módulo complementar: monitorar a temperatura de armazenamento em uma UBS, guardar as leituras e registrar valores fora de um intervalo de teste. Ele não lê receitas, não consulta estoque e ainda não conversa com o aplicativo MediSUS.
+O projeto IoT contribui para esse contexto ao demonstrar o monitoramento da temperatura de armazenamento de medicamentos em uma UBS. O fluxo recebe leituras, compara com parâmetros de demonstração, salva os dados e registra alertas. Para dispensar hardware na apresentação, as leituras são sintéticas e publicadas pelo simulador.
 
-Uma integração futura poderia permitir ao sistema de estoque consultar as condições monitoradas por produto e UBS. Isso é uma ideia de evolução, não uma funcionalidade já implementada.
+### Como explicar a proposta
 
-### Como explicar a relação ao professor
-
-> “O MediSUS principal ajuda o cidadão a encontrar medicamentos. Este repositório IoT é um módulo complementar que demonstra o monitoramento de temperatura de armazenamento na UBS. Ele ainda não está integrado ao fluxo da receita ou à consulta de estoque, então apresentamos essa relação como uma possibilidade de evolução, não como algo que já funciona.”
+> “O MediSUS usa tecnologia para facilitar o acesso da população aos medicamentos da rede pública. Nosso projeto IoT aborda as condições de armazenamento em uma UBS: o simulador envia leituras de temperatura e o sistema registra os dados e sinaliza valores fora dos parâmetros de demonstração.”
 
 ## 2. Como explicar a arquitetura
 

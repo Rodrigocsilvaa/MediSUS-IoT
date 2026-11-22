@@ -4,9 +4,17 @@ Este guia explica o protótipo com palavras simples para ajudar a equipe a compr
 
 > **Apresente com honestidade:** a demonstração usa leituras sintéticas do simulador. O ESP32 e o DS18B20 aparecem como referência de integração, mas não foram testados em hardware. Os limites de 2 °C e 8 °C são apenas parâmetros de demonstração. A IA resume leituras sob demanda; não calcula os alertas. Os testes automatizados da IA usam uma resposta simulada. Uma chamada real à API exige uma chave válida e pode gerar cobrança.
 
-## 1. A ideia em uma frase
+## 1. A ideia do MediSUS e o escopo deste repositório
 
-O MediSUS IoT é um protótipo que demonstra como monitorar temperatura de armazenamento em uma UBS: receber leituras, detectar valores fora de um intervalo de demonstração, guardar as informações e, opcionalmente, pedir a uma IA que explique os resultados em português.
+A proposta maior do MediSUS ajuda o paciente a fotografar uma receita, identificar medicamentos e encontrar UBS próximas com estoque, incluindo informação sobre a Farmácia Popular.
+
+Este repositório **não implementa essas funções**. Ele demonstra um módulo complementar: monitorar a temperatura de armazenamento em uma UBS, guardar as leituras e registrar valores fora de um intervalo de teste. Ele não lê receitas, não consulta estoque e ainda não conversa com o aplicativo MediSUS.
+
+Uma integração futura poderia permitir ao sistema de estoque consultar as condições monitoradas por produto e UBS. Isso é uma ideia de evolução, não uma funcionalidade já implementada.
+
+### Como explicar a relação ao professor
+
+> “O MediSUS principal ajuda o cidadão a encontrar medicamentos. Este repositório IoT é um módulo complementar que demonstra o monitoramento de temperatura de armazenamento na UBS. Ele ainda não está integrado ao fluxo da receita ou à consulta de estoque, então apresentamos essa relação como uma possibilidade de evolução, não como algo que já funciona.”
 
 ## 2. Como explicar a arquitetura
 
@@ -164,3 +172,7 @@ O material de orientação da Global Solution pede que o uso de IA generativa se
 > “Utilizamos uma ferramenta de IA generativa como apoio à implementação e à documentação. Revisamos o fluxo, executamos os testes automatizados e a demonstração sintética, e reconhecemos as limitações do protótipo.”
 
 Cada integrante deve estudar o suficiente para explicar e responder perguntas sobre o que a equipe apresenta. Não afirmem que o protótipo físico ou a chamada real da IA foram testados se isso não aconteceu.
+
+## Próximo passo para o estudo da equipe
+
+Use também o [checklist de estudo e apresentação](CHECKLIST_APRESENTACAO.md), que resume em ordem o que revisar e o que mostrar.

@@ -227,7 +227,7 @@ As capturas abaixo mostram os principais resultados. **Todas as temperaturas sã
 
 ![Cinco leituras sintéticas persistidas, com duas marcadas como alerta](evidence/prints/T04_sqlite_leituras.png)
 
-Os demais casos, logs completos, resultados, critérios e limitações estão em [`evidence/EVIDENCIAS.md`](evidence/EVIDENCIAS.md). A demonstração Docker Compose completa e a chamada real à API de IA ainda estão pendentes; os testes de configuração e os testes simulados da IA não substituem essas execuções.
+Os demais casos, logs completos, resultados, critérios e limitações estão em [`evidence/EVIDENCIAS.md`](evidence/EVIDENCIAS.md). A demonstração completa via Docker Compose foi executada no computador da equipe: o broker iniciou, quatro leituras foram publicadas e o alerta para `8.3 °C` apareceu no log. O resumo com IA também tem testes automatizados simulados; uma chamada real à API ainda requer chave válida e pode gerar cobrança.
 
 ## Configuração da demonstração
 

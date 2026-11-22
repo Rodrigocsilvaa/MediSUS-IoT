@@ -31,7 +31,7 @@ Uma quinta leitura sintética, de 1.5 °C, foi publicada separadamente para test
 | T08 | Proteções do resumidor de IA | Sem chave ou sem leituras, o comando termina com mensagem clara; só temperaturas, horários e flags são enviados | Comportamentos documentados; [`log`](logs/T08_ia_sem_chave.txt) e [captura](prints/T08_ia_sem_chave.png). |
 | T09 | Integração de IA simulada | Testes mock validam requisição, resposta e erros sem chamar serviço externo | 3/3 passaram; [`log`](logs/T09_ia_testes_mock.txt) e [captura](prints/T09_ia_testes_mock.png). |
 | T10 | Configuração Docker Compose | Serviços base e serviços de cada perfil aparecem na configuração | Verificação reproduzida no log [`T10_docker_config.txt`](logs/T10_docker_config.txt). A captura recebida para este teste não foi incluída porque os serviços listados nela não correspondiam ao arquivo Compose atual. |
-| T11 | Execução ponta a ponta em Docker Compose | Broker, serviço e simulador sobem juntos e produzem leituras/alertas | **Pendente de confirmação ponta a ponta.** Os logs locais T02–T06 demonstram o fluxo com broker local, não comprovam a execução dos contêineres via Compose. |
+| T11 | Execução ponta a ponta em Docker Compose | Broker, serviço e simulador sobem juntos e produzem leituras/alertas | **Passou no computador da equipe:** broker `Healthy`, monitor `Started`, quatro leituras publicadas e alerta `8.3 °C` confirmado no log; consulte [`T11_docker_compose.txt`](logs/T11_docker_compose.txt). |
 | T12 | Resumo com chamada real à IA | Uma chamada autenticada retorna um resumo; a chave permanece privada | **Pendente.** Requer chave de API válida e pode gerar cobrança. Os testes mock T09 não substituem uma chamada real. |
 
 O workflow [`tests.yml`](../.github/workflows/tests.yml) executou com sucesso no GitHub Actions: 12 testes passaram no runner Windows. Consulte o [histórico das execuções](https://github.com/Rodrigocsilvaa/MediSUS-IoT/actions/workflows/tests.yml).
@@ -45,7 +45,7 @@ Os alertas são determinados por regras fixas no serviço. A IA generativa, quan
 ## Limitações e reprodução
 
 - Os valores 2 °C e 8 °C são parâmetros de demonstração, não orientação universal ou regulatória. Para qualquer produto real, limites devem ser obtidos em fonte oficial aplicável àquele produto.
-- As capturas e logs T02–T09 foram fornecidos pela equipe; T01 foi executado novamente neste workspace e no GitHub Actions; T10 foi verificado no ambiente atual. T11 e T12 continuam explicitamente pendentes. O daemon Docker não está acessível neste workspace, portanto não foi possível confirmar a execução dos contêineres via Compose.
+- As capturas e logs T02–T09 foram fornecidos pela equipe; T01 foi executado novamente neste workspace e no GitHub Actions; T10 foi verificado no ambiente atual. O log T11 foi enviado pela equipe em 22/11/2026 e confirma a execução ponta a ponta via Compose no computador dela. T12 continua pendente.
 - O sensor, o ESP32 e a ligação elétrica não foram testados em hardware.
 - O broker de demonstração permite conexões anônimas e não usa TLS. Não exponha a porta 1883 em uma rede não confiável.
 - O resumo por IA depende de uma API externa, pode custar dinheiro e pode produzir erros. Use somente dados sintéticos; nunca envie informações pessoais ou dados reais de saúde.

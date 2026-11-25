@@ -280,7 +280,7 @@
       <div class="cover-title">
         <p class="course-tag">Internet das Coisas · IoT</p>
         <h1>MediSUS</h1>
-        <p class="cover-subtitle">Guia da apresentação: a ideia IoT para monitorar condições de armazenamento nas UBS</p>
+        <p class="cover-subtitle">Proposta de módulo IoT: monitoramento da temperatura de armazenamento de medicamentos em UBS</p>
       </div>
       <div class="cover-art" aria-label="Leitura, comunicação e UBS">
         <div class="art-item">
@@ -318,34 +318,34 @@
   <section class="page">
     <div class="running-head"><span class="fiap">FIAP</span><span>MEDISUS · GRUPO URBIS · GUIA IOT</span></div>
     <div class="chapter">
-      <h2 class="chapter-title"><span class="chapter-no">01</span><span>Quem somos e o que apresentamos</span></h2>
-      <p class="deck">Somos o Grupo Urbis, turma 2TDSR, e este é o nosso recorte de Internet das Coisas para o MediSUS.</p>
+      <h2 class="chapter-title"><span class="chapter-no">01</span><span>Quem somos, proposta e solução</span></h2>
+      <p class="deck">Somos o Grupo Urbis, turma 2TDSR. Este é o módulo IoT que desenvolvemos para a Global Solution 2026/2, relacionado à proposta MediSUS.</p>
       <div class="cards-3">
         <div class="card card-pink">
-          <h3>O contexto</h3>
-          <p>O MediSUS é uma proposta de tecnologia para facilitar o acesso da população aos medicamentos da rede pública.</p>
+          <h3>Quem somos</h3>
+          <p>Somos estudantes apresentando um recorte de Internet das Coisas aplicado a um desafio de saúde pública.</p>
         </div>
         <div class="card card-blue">
-          <h3>Nosso trabalho</h3>
-          <p>Explorar como IoT pode apoiar o acompanhamento das condições de armazenamento em uma UBS.</p>
+          <h3>Nossa proposta</h3>
+          <p>Monitorar a temperatura de armazenamento de medicamentos em uma UBS, em complemento à ideia MediSUS de facilitar o acesso a medicamentos.</p>
         </div>
         <div class="card card-green">
-          <h3>O protótipo</h3>
-          <p>Demonstrar o fluxo de leituras, alertas e registros usando um simulador e dados sintéticos.</p>
+          <h3>Nossa solução</h3>
+          <p>Receber leituras via MQTT, validá-las, registrar no SQLite e sinalizar as que saem dos parâmetros de demonstração.</p>
         </div>
       </div>
-      <h2>Texto para apresentar</h2>
-      <div class="quote" style="font-size:10pt; line-height:1.55">
-        “O MediSUS parte da ideia de facilitar o acesso da população aos medicamentos da rede pública. Neste projeto, exploramos como a tecnologia IoT pode apoiar o acompanhamento das condições de armazenamento de medicamentos em uma UBS.
-        <br><br>
-        O fluxo previsto usa um sensor de temperatura conectado a um ESP32. Para a demonstração, usamos um simulador que envia leituras pelo MQTT. O Mosquitto recebe e encaminha as mensagens para um serviço em Python, que valida os dados, compara a temperatura com parâmetros de demonstração e salva as leituras em um banco SQLite. Quando um valor sai desse intervalo, o sistema registra um alerta.
-        <br><br>
-        Agora vou executar a demonstração e mostrar as leituras recebidas, o alerta e os dados salvos.”
+      <h2>Como se conecta ao MediSUS</h2>
+      <div class="two-col">
+        <div class="soft-box">
+          <h3>Proposta MediSUS</h3>
+          <p>Usar tecnologia para facilitar o acesso da população aos medicamentos da rede pública.</p>
+        </div>
+        <div class="soft-box blue">
+          <h3>Contribuição IoT</h3>
+          <p>Explorar o acompanhamento das condições de armazenamento como parte desse contexto de saúde pública.</p>
+        </div>
       </div>
-      <div class="soft-box" style="margin-top:14px">
-        <h3>Em palavras simples</h3>
-        <p>Somos estudantes apresentando um módulo IoT relacionado ao MediSUS. A demonstração comprova o fluxo do software; o sensor e o ESP32 são a proposta física, não uma medição realizada nesta apresentação.</p>
-      </div>
+      <div class="quote"><span class="label">Escopo</span>O protótipo demonstrado usa leituras sintéticas do simulador. O DS18B20 e o ESP32 representam a implementação física prevista; não foram testados em hardware.</div>
     </div>
     <div class="footer"><span>Global Solution 2026/2 · Internet das Coisas · MediSUS IoT</span><span>2</span></div>
   </section>
@@ -353,58 +353,7 @@
   <section class="page">
     <div class="running-head"><span class="fiap">FIAP</span><span>MEDISUS · GRUPO URBIS · GUIA IOT</span></div>
     <div class="chapter">
-      <h2 class="chapter-title"><span class="chapter-no">02</span><span>A ideia do MediSUS IoT</span></h2>
-      <p class="deck">O contexto do projeto e a contribuição que escolhemos explorar com Internet das Coisas.</p>
-      <div class="cards-3">
-        <div class="card card-pink">
-          <h3>O contexto</h3>
-          <p>A proposta MediSUS busca facilitar o acesso da população aos medicamentos da rede pública.</p>
-        </div>
-        <div class="card card-blue">
-          <h3>O desafio</h3>
-          <p>Além da disponibilidade, as condições de armazenamento nas unidades de saúde também importam.</p>
-        </div>
-        <div class="card card-green">
-          <h3>A ideia IoT</h3>
-          <p>Monitorar a temperatura em uma UBS e destacar leituras fora dos parâmetros configurados.</p>
-        </div>
-      </div>
-
-      <h2>O que propomos</h2>
-      <p>Um módulo de monitoramento que recebe leituras de temperatura, registra o histórico e sinaliza uma variação para que a equipe possa observá-la. Essa ideia se relaciona ao objetivo do MediSUS de apoiar o acesso a medicamentos, olhando também para as condições em que são armazenados.</p>
-
-      <div class="two-col">
-        <div class="soft-box">
-          <h3>Visão do MediSUS</h3>
-          <p>Usar tecnologia para aproximar a população dos serviços e medicamentos da rede pública.</p>
-        </div>
-        <div class="soft-box blue">
-          <h3>Nosso recorte IoT</h3>
-          <p>Demonstrar como leituras de temperatura podem ser recebidas, validadas, armazenadas e sinalizadas.</p>
-        </div>
-      </div>
-
-      <h2>Quem se beneficia</h2>
-      <div class="two-col">
-        <div class="soft-box">
-          <h3>População</h3>
-          <p>É a beneficiária da proposta mais ampla de facilitar o acesso a medicamentos da rede pública.</p>
-        </div>
-        <div class="soft-box blue">
-          <h3>Equipe da UBS</h3>
-          <p>Poderia consultar registros e observar variações sinalizadas pelo monitoramento.</p>
-        </div>
-      </div>
-
-      <div class="quote"><span class="label">Fala de abertura</span>“O MediSUS propõe facilitar o acesso aos medicamentos da rede pública. Nossa ideia de IoT complementa esse contexto com o monitoramento das condições de armazenamento em uma UBS.”</div>
-    </div>
-    <div class="footer"><span>Global Solution 2026/2 · Internet das Coisas · MediSUS IoT</span><span>3</span></div>
-  </section>
-
-  <section class="page">
-    <div class="running-head"><span class="fiap">FIAP</span><span>MEDISUS · GRUPO URBIS · GUIA IOT</span></div>
-    <div class="chapter">
-      <h2 class="chapter-title"><span class="chapter-no">03</span><span>Como a solução funciona</span></h2>
+      <h2 class="chapter-title"><span class="chapter-no">02</span><span>Como a solução funciona</span></h2>
       <p class="deck">O caminho da leitura, do sensor até o registro do alerta.</p>
 
       <div class="sources">
@@ -438,9 +387,8 @@
         </tbody>
       </table>
       <div class="quote"><span class="label">Importante</span>Os limites de 2 °C a 8 °C são apenas parâmetros usados no exemplo, não uma regra universal para medicamentos. A demonstração usa dados sintéticos; o ESP32 e o sensor são uma proposta de implementação física.</div>
-      <div class="quote"><span class="label">Em uma frase</span>“A ideia IoT é acompanhar e registrar a temperatura de armazenamento em uma UBS, usando um protótipo demonstrável por simulador.”</div>
     </div>
-    <div class="footer"><span>Global Solution 2026/2 · Internet das Coisas · MediSUS IoT</span><span>4</span></div>
+    <div class="footer"><span>Global Solution 2026/2 · Internet das Coisas · MediSUS IoT</span><span>3</span></div>
   </section>
 </body>
 </html>

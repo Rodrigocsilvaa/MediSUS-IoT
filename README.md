@@ -6,8 +6,6 @@ Na visão do MediSUS, a tecnologia pode facilitar o acesso da população aos me
 
 **O projeto funciona sem placa ou sensor:** um simulador publica leituras sintéticas para que qualquer pessoa possa executar e observar o fluxo completo usando Docker Compose.
 
-> [!IMPORTANT]
-> Este protótipo acadêmico usa leituras sintéticas. Os limites padrão de **2 °C a 8 °C são parâmetros de demonstração**, não uma recomendação médica ou regulatória. Em uma aplicação real, os limites devem vir de uma fonte oficial aplicável ao produto. O ESP32 e o circuito são referências e não foram validados em hardware.
 
 ## Equipe
 

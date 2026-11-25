@@ -1,11 +1,23 @@
 # MediSUS IoT
 
-### Módulo IoT para apoio à saúde pública
+> **GRUPO URBIS · 2TDSR · GLOBAL SOLUTION 2026/2 · CITIZENTECH**
 
-Na visão do MediSUS, a tecnologia pode facilitar o acesso da população aos medicamentos da rede pública. Este projeto explora um recorte IoT desse contexto CitizenTech: acompanhar a temperatura de armazenamento de medicamentos em uma Unidade Básica de Saúde (UBS), apoiando a observação das condições de armazenamento.
+## Quem somos
 
-**O projeto funciona sem placa ou sensor:** um simulador publica leituras sintéticas para que qualquer pessoa possa executar e observar o fluxo completo usando Docker Compose.
+Somos o **Grupo Urbis**, da turma **2TDSR**, e este é o nosso projeto **MediSUS IoT** para a Global Solution 2026/2, no tema CitizenTech.
 
+## Nossa ideia
+
+O MediSUS parte do desafio de o paciente sair da consulta com a receita e não encontrar o medicamento na UBS. Nossa proposta é facilitar o acesso, ajudando a identificar onde os medicamentos estão disponíveis na rede pública.
+
+## Nossa proposta IoT
+
+Como recorte de IoT, criamos um protótipo para acompanhar a temperatura de armazenamento de medicamentos em uma UBS. O fluxo recebe leituras por MQTT, valida os dados, registra as temperaturas no SQLite e sinaliza valores fora dos parâmetros de demonstração.
+
+**A demonstração usa um simulador com leituras sintéticas. O ESP32 e o sensor DS18B20 são a implementação física prevista e ainda não foram testados em hardware.**
+
+> [!IMPORTANT]
+> Os limites padrão de **2 °C a 8 °C são apenas parâmetros de demonstração**, não uma recomendação médica ou regulatória. Em uma aplicação real, os limites devem vir de uma fonte oficial aplicável ao produto.
 
 ## Equipe
 

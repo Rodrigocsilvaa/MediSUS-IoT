@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MediSUS IoT — apresentação</title>
+  <title>MediSUS IoT — apresentação curta</title>
   <style>
     :root {
       --navy: #10243a;
@@ -17,11 +17,7 @@
       --amber: #f0ad3d;
     }
 
-    @page {
-      size: 13.333in 7.5in;
-      margin: 0;
-    }
-
+    @page { size: 13.333in 7.5in; margin: 0; }
     * { box-sizing: border-box; }
 
     html, body {
@@ -38,7 +34,7 @@
       width: 13.333in;
       height: 7.5in;
       margin: 18px auto;
-      padding: .56in .72in .82in;
+      padding: .62in .78in .78in;
       overflow: hidden;
       background: var(--white);
       page-break-after: always;
@@ -46,45 +42,26 @@
     }
 
     .slide:last-child { page-break-after: auto; break-after: auto; }
-
     .topline {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       color: var(--muted);
       font-size: 11pt;
-      font-weight: 650;
+      font-weight: 700;
       letter-spacing: .08em;
       text-transform: uppercase;
     }
-
     .brand { color: var(--blue); }
-    .number { font-variant-numeric: tabular-nums; }
-
-    h1, h2, h3, p { margin-top: 0; }
-    h1 {
-      margin-bottom: 18px;
-      color: var(--navy);
-      font-size: 36pt;
-      line-height: 1.08;
-      letter-spacing: -.025em;
+    .cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: radial-gradient(circle at 82% 18%, rgba(22,160,133,.25), transparent 25%),
+        linear-gradient(125deg, #10243a 0%, #163f62 65%, #1769aa 100%);
+      color: var(--white);
     }
-
-    h2 {
-      margin: 26px 0 12px;
-      color: var(--navy);
-      font-size: 20pt;
-      line-height: 1.15;
-    }
-
-    h3 {
-      margin-bottom: 8px;
-      color: var(--navy);
-      font-size: 16pt;
-    }
-
-    p, li { font-size: 16pt; line-height: 1.42; }
-    .lead { max-width: 10.6in; color: var(--muted); font-size: 20pt; line-height: 1.38; }
+    .cover .topline, .cover h1, .cover .lead { color: var(--white); }
+    .cover .brand, .cover .eyebrow { color: #71e0c3; }
     .eyebrow {
       margin: 0 0 12px;
       color: var(--teal);
@@ -93,177 +70,83 @@
       letter-spacing: .12em;
       text-transform: uppercase;
     }
-
-    .cover {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background:
-        radial-gradient(circle at 82% 22%, rgba(22,160,133,.25), transparent 25%),
-        linear-gradient(125deg, #10243a 0%, #163f62 65%, #1769aa 100%);
-      color: var(--white);
+    h1 {
+      margin: 0 0 18px;
+      color: var(--navy);
+      font-size: 36pt;
+      line-height: 1.08;
+      letter-spacing: -.025em;
     }
-
-    .cover .topline, .cover h1, .cover .lead { color: var(--white); }
-    .cover .brand, .cover .eyebrow { color: #71e0c3; }
-    .cover .lead { max-width: 9.5in; }
+    h2 { margin: 0 0 12px; color: var(--navy); font-size: 20pt; }
+    h3 { margin: 0 0 8px; color: var(--navy); font-size: 16pt; }
+    p { font-size: 17pt; line-height: 1.42; }
+    .lead { max-width: 10in; margin: 0; color: var(--muted); font-size: 21pt; }
+    .cover .lead { color: #edf6fb; }
+    .cover .eyebrow { margin-bottom: 16px; }
     .cover-mark {
       width: 72px;
       height: 6px;
-      margin: 18px 0 30px;
+      margin: 24px 0;
       border-radius: 4px;
       background: #71e0c3;
     }
-    .cover-meta {
-      margin-top: 36px;
-      color: #d2e4f0;
-      font-size: 14pt;
-      letter-spacing: .03em;
-    }
-
-    .content { margin-top: 26px; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .meta { margin-top: 30px; color: #d2e4f0; font-size: 14pt; }
+    .content { margin-top: 34px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 28px; }
     .card {
-      padding: 21px 23px;
+      padding: 22px 24px;
       border: 1px solid var(--line);
       border-radius: 14px;
       background: #fbfdff;
     }
-    .card p:last-child, .card ul:last-child { margin-bottom: 0; }
-    .card p, .card li { font-size: 15pt; }
-    .card ul { margin: 8px 0 0; padding-left: 21px; }
+    .card p { margin: 0; font-size: 16pt; }
     .accent { border-top: 5px solid var(--teal); }
     .accent-blue { border-top: 5px solid var(--blue); }
-    .accent-amber { border-top: 5px solid var(--amber); }
-    .tag {
-      display: inline-block;
-      padding: 5px 10px;
-      border-radius: 99px;
-      background: #e6f5f1;
-      color: #087a64;
-      font-size: 11pt;
-      font-weight: 700;
-      letter-spacing: .04em;
-      text-transform: uppercase;
+    .flow {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+      margin: 32px 0 24px;
     }
+    .node {
+      display: flex;
+      flex: 1;
+      min-height: 1.3in;
+      flex-direction: column;
+      justify-content: center;
+      padding: 14px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--pale);
+      text-align: center;
+    }
+    .node strong { color: var(--navy); font-size: 15pt; }
+    .node span { margin-top: 7px; color: var(--muted); font-size: 11pt; line-height: 1.3; }
+    .arrow { align-self: center; color: var(--teal); font-size: 23pt; font-weight: 700; }
     .callout {
-      margin-top: 19px;
+      margin-top: 20px;
       padding: 13px 17px;
       border-left: 5px solid var(--amber);
       border-radius: 5px;
       background: #fff8e9;
       color: #624814;
       font-size: 13pt;
-      line-height: 1.38;
+      line-height: 1.4;
     }
-
-    .flow {
-      display: flex;
-      align-items: stretch;
-      gap: 11px;
-      margin: 30px 0 22px;
-    }
-    .flow-item {
-      display: flex;
-      flex: 1;
-      min-height: 1.55in;
-      flex-direction: column;
-      justify-content: center;
-      padding: 17px 15px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: var(--pale);
-      text-align: center;
-    }
-    .flow-item strong { color: var(--navy); font-size: 16pt; }
-    .flow-item span { margin-top: 6px; color: var(--muted); font-size: 12pt; line-height: 1.35; }
-    .arrow { align-self: center; color: var(--teal); font-size: 26pt; font-weight: 700; }
-
-    .architecture {
-      display: grid;
-      grid-template-columns: 1.05fr .2fr 1fr .2fr 1.2fr .2fr 1fr;
-      align-items: center;
-      gap: 5px;
-      margin: 36px 0 20px;
-    }
-    .node {
-      display: flex;
-      min-height: 1.28in;
-      flex-direction: column;
-      justify-content: center;
-      padding: 15px 13px;
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      background: var(--pale);
-      text-align: center;
-    }
-    .node strong { color: var(--navy); font-size: 16pt; }
-    .node small { display: block; margin-top: 7px; color: var(--muted); font-size: 11pt; line-height: 1.3; }
-    .node-active { border-color: #9bd8c9; background: #e9f8f4; }
-    .connector { color: var(--teal); font-size: 22pt; font-weight: 700; text-align: center; }
-    .source-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-    .source {
-      padding: 10px 12px;
-      border-radius: 9px;
-      background: #f4f8fb;
-      color: var(--muted);
-      font-size: 12pt;
-      text-align: center;
-    }
-
-    .code {
-      margin: 9px 0 13px;
-      padding: 13px 16px;
-      border-radius: 9px;
-      background: #10243a;
-      color: #e4f0f8;
-      font-family: Consolas, "Courier New", monospace;
-      font-size: 12pt;
-      line-height: 1.42;
-      white-space: pre-wrap;
-    }
-    .code-label { margin: 16px 0 5px; color: var(--blue); font-size: 12pt; font-weight: 750; }
-    .result {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      margin: 22px 0;
-    }
-    .metric {
-      padding: 20px;
-      border-radius: 13px;
-      background: var(--pale);
-      text-align: center;
-    }
-    .metric strong { display: block; color: var(--blue); font-size: 32pt; }
-    .metric span { color: var(--muted); font-size: 13pt; }
-    .alert-line {
-      margin: 17px 0;
-      padding: 16px 18px;
-      border-radius: 9px;
-      background: #fff1ed;
-      color: #8d3522;
-      font-family: Consolas, "Courier New", monospace;
-      font-size: 14pt;
-    }
-    .filelist { columns: 2; column-gap: 30px; margin: 10px 0 0; padding-left: 21px; }
-    .filelist li { margin-bottom: 11px; break-inside: avoid; font-size: 14pt; }
-    code { color: #134a72; font-family: Consolas, "Courier New", monospace; font-size: .9em; }
     .closing {
-      margin-top: 24px;
-      padding: 20px 24px;
-      border-radius: 12px;
+      margin-top: 23px;
+      padding: 17px 21px;
+      border-radius: 11px;
       background: #e9f8f4;
       color: #124638;
-      font-size: 18pt;
-      line-height: 1.42;
+      font-size: 17pt;
+      line-height: 1.4;
     }
     .speaker {
       position: absolute;
-      right: .72in;
+      right: .78in;
       bottom: .28in;
-      left: .72in;
+      left: .78in;
       padding-top: 9px;
       border-top: 1px solid var(--line);
       color: var(--muted);
@@ -273,8 +156,6 @@
     .speaker b { color: var(--blue); }
     .cover .speaker { border-color: rgba(255,255,255,.35); color: #d2e4f0; }
     .cover .speaker b { color: #71e0c3; }
-    .small { color: var(--muted); font-size: 12pt; line-height: 1.35; }
-
     @media print {
       html, body { background: white; }
       .slide { margin: 0; box-shadow: none; }
@@ -283,173 +164,48 @@
 </head>
 <body>
   <section class="slide cover">
-    <div class="topline"><span class="brand">MediSUS · CitizenTech</span><span class="number">01 / 08</span></div>
+    <div class="topline"><span class="brand">MediSUS · CitizenTech</span><span>01 / 02</span></div>
     <div style="margin-top: 1.05in">
-      <p class="eyebrow">Projeto IoT · Global Solution 2026/2</p>
-      <h1>Monitoramento de temperatura<br>em unidades de saúde</h1>
+      <p class="eyebrow">Projeto MediSUS · Global Solution 2026/2</p>
+      <h1>Tecnologia para apoiar<br>a saúde pública</h1>
       <div class="cover-mark"></div>
-      <p class="lead">Um módulo demonstrativo para acompanhar leituras de temperatura relacionadas ao armazenamento de medicamentos em uma UBS.</p>
-      <p class="cover-meta">Grupo Urbis · 2TDSR</p>
+      <p class="lead">A proposta do MediSUS é facilitar o acesso da população aos medicamentos da rede pública.</p>
+      <p class="meta">Grupo Urbis · 2TDSR</p>
     </div>
-    <div class="speaker"><b>Fala sugerida:</b> “O MediSUS propõe aproximar tecnologia e serviços públicos de saúde. Neste recorte, apresento um módulo IoT que recebe leituras de temperatura e sinaliza valores fora de parâmetros configurados para a demonstração.”</div>
+    <div class="speaker"><b>Fala sugerida:</b> “O MediSUS é uma proposta de tecnologia voltada a facilitar o acesso da população aos medicamentos da rede pública. A ideia de IoT que desenvolvemos se conecta a esse contexto pelo cuidado com as condições de armazenamento.”</div>
   </section>
 
   <section class="slide">
-    <div class="topline"><span class="brand">MediSUS · contexto</span><span class="number">02 / 08</span></div>
+    <div class="topline"><span class="brand">MediSUS · ideia IoT</span><span>02 / 02</span></div>
     <div class="content">
-      <p class="eyebrow">01 · problema público</p>
-      <h1>Condições de armazenamento também importam</h1>
-      <p class="lead">A disponibilidade de um medicamento não é a única questão: suas condições de armazenamento precisam ser acompanhadas.</p>
-      <div class="grid-2" style="margin-top: 28px">
-        <div class="card accent-blue">
-          <span class="tag">Desafio</span>
-          <h2>Perceber e registrar variações</h2>
-          <p>Sem um registro contínuo, uma alteração de temperatura pode passar despercebida entre verificações.</p>
-        </div>
-        <div class="card accent">
-          <span class="tag">Contribuição</span>
-          <h2>Apoiar a observação</h2>
-          <p>Um fluxo de monitoramento pode registrar leituras e destacar valores fora de uma faixa definida para o cenário.</p>
-        </div>
-      </div>
-      <div class="callout">Conexão com CitizenTech: aplicar tecnologia a um desafio de serviço público, com foco na saúde e no apoio à gestão.</div>
-    </div>
-    <div class="speaker"><b>Fala sugerida:</b> “A proposta se conecta ao MediSUS pelo contexto da saúde pública. O recorte IoT trata das condições de armazenamento e da possibilidade de registrar variações para apoiar a observação pela equipe.”</div>
-  </section>
-
-  <section class="slide">
-    <div class="topline"><span class="brand">MediSUS · solução</span><span class="number">03 / 08</span></div>
-    <div class="content">
-      <p class="eyebrow">02 · o que foi desenvolvido</p>
-      <h1>Da leitura ao registro de alerta</h1>
-      <p class="lead">O serviço recebe uma mensagem, valida os dados, aplica uma regra configurada e persiste o resultado.</p>
+      <p class="eyebrow">A contribuição do nosso projeto</p>
+      <h1>Monitorar a temperatura de armazenamento</h1>
+      <p class="lead">A ideia é acompanhar a temperatura em uma UBS e sinalizar leituras fora dos parâmetros definidos para o cenário.</p>
       <div class="flow">
-        <div class="flow-item"><strong>Leitura</strong><span>Sensor previsto<br>ou simulador</span></div><div class="arrow">›</div>
-        <div class="flow-item"><strong>MQTT</strong><span>Mensagem enviada<br>ao broker</span></div><div class="arrow">›</div>
-        <div class="flow-item"><strong>Validação</strong><span>Formato e temperatura<br>são verificados</span></div><div class="arrow">›</div>
-        <div class="flow-item"><strong>Registro</strong><span>SQLite e logs<br>com status de alerta</span></div>
+        <div class="node"><strong>DS18B20</strong><span>Sensor de temperatura<br>previsto</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><strong>ESP32</strong><span>Envia a leitura<br>pela rede</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><strong>MQTT</strong><span>Transporta a<br>mensagem</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><strong>Monitor Python</strong><span>Valida, registra<br>e sinaliza alerta</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><strong>SQLite</strong><span>Guarda as<br>leituras</span></div>
       </div>
       <div class="grid-2">
         <div class="card accent">
-          <h3>Na demonstração</h3>
-          <p>Um simulador publica quatro leituras sintéticas: 4,5 °C, 5,2 °C, 8,3 °C e 3,8 °C.</p>
+          <h3>O que a ideia busca</h3>
+          <p>Dar mais visibilidade às leituras e facilitar a identificação de variações que merecem atenção.</p>
         </div>
-        <div class="card accent-amber">
-          <h3>Parâmetros do exemplo</h3>
-          <p>Os limites 2 °C e 8 °C servem somente para demonstrar a regra de alerta.</p>
-        </div>
-      </div>
-      <div class="callout">O ESP32 e o DS18B20 estão representados em um firmware de referência. As leituras apresentadas são simuladas; não houve validação em hardware.</div>
-    </div>
-    <div class="speaker"><b>Fala sugerida:</b> “Na execução, o simulador substitui o sensor físico. O monitor valida cada mensagem, compara a temperatura com os limites de demonstração e grava a leitura e o status no SQLite.”</div>
-  </section>
-
-  <section class="slide">
-    <div class="topline"><span class="brand">MediSUS · arquitetura</span><span class="number">04 / 08</span></div>
-    <div class="content">
-      <p class="eyebrow">03 · componentes</p>
-      <h1>Uma arquitetura pequena e demonstrável</h1>
-      <div class="source-row">
-        <div class="source"><b>Referência física:</b> DS18B20 → ESP32</div>
-        <div class="source"><b>Execução demonstrada:</b> simulador Python → MQTT</div>
-      </div>
-      <div class="architecture">
-        <div class="node"><strong>Fonte</strong><small>Sensor/ESP32 previsto<br>ou simulador sintético</small></div>
-        <div class="connector">→</div>
-        <div class="node node-active"><strong>Mosquitto</strong><small>Broker que recebe e<br>distribui mensagens MQTT</small></div>
-        <div class="connector">→</div>
-        <div class="node node-active"><strong>Monitor Python</strong><small>Validação · limites<br>e classificação do alerta</small></div>
-        <div class="connector">→</div>
-        <div class="node"><strong>SQLite + logs</strong><small>Persistência das leituras<br>e saída observável</small></div>
-      </div>
-      <div class="grid-3" style="margin-top: 24px">
-        <div class="card"><h3>MQTT</h3><p>Protocolo leve no modelo publicar/assinar.</p></div>
-        <div class="card"><h3>Docker Compose</h3><p>Inicia broker e monitor juntos.</p></div>
-        <div class="card"><h3>SQLite</h3><p>Armazena os registros localmente.</p></div>
-      </div>
-    </div>
-    <div class="speaker"><b>Fala sugerida:</b> “O broker desacopla quem publica de quem consome. O serviço Python concentra a regra; o banco registra o histórico. O Compose facilita repetir a demonstração no computador.”</div>
-  </section>
-
-  <section class="slide">
-    <div class="topline"><span class="brand">MediSUS · código</span><span class="number">05 / 08</span></div>
-    <div class="content">
-      <p class="eyebrow">04 · onde olhar no VS Code</p>
-      <h1>Cada arquivo tem uma responsabilidade</h1>
-      <ul class="filelist">
-        <li><code>docker-compose.yml</code><br>Broker, monitor, simulador e armazenamento.</li>
-        <li><code>src/medisus_iot/simulator.py</code><br>Publica os valores sintéticos.</li>
-        <li><code>src/medisus_iot/monitor.py</code><br>Assina o tópico MQTT e coordena o processamento.</li>
-        <li><code>src/medisus_iot/readings.py</code><br>Valida mensagens e aplica a regra de limites.</li>
-        <li><code>src/medisus_iot/storage.py</code><br>Grava e consulta leituras no SQLite.</li>
-        <li><code>tests/</code><br>Testa validação, limites, persistência e IA simulada.</li>
-        <li><code>firmware/esp32_ds18b20/</code><br>Sketch de referência para integração física.</li>
-        <li><code>evidence/</code><br>Logs e capturas dos testes e da demonstração.</li>
-      </ul>
-      <div class="callout">Para explicar a lógica, abra <code>readings.py</code>. Para acompanhar o caminho completo, comece pelo simulador e siga até <code>monitor.py</code> e <code>storage.py</code>.</div>
-    </div>
-    <div class="speaker"><b>Fala sugerida:</b> “O código está separado por responsabilidade. A regra de alerta fica em readings.py; monitor.py recebe mensagens e storage.py persiste os dados. Os testes cobrem esses comportamentos.”</div>
-  </section>
-
-  <section class="slide">
-    <div class="topline"><span class="brand">MediSUS · demonstração</span><span class="number">06 / 08</span></div>
-    <div class="content">
-      <p class="eyebrow">05 · execução no VS Code</p>
-      <h1>Mostre o fluxo acontecendo</h1>
-      <p class="lead">Abra o projeto no VS Code, inicie o Docker Desktop e use o terminal integrado na pasta do repositório.</p>
-      <p class="code-label">1 · Inicie o broker e o monitor</p>
-      <div class="code">docker compose up -d --build mosquitto monitor</div>
-      <p class="code-label">2 · Publique as leituras sintéticas</p>
-      <div class="code">docker compose --profile demo run --rm simulator</div>
-      <p class="code-label">3 · Mostre o log e o alerta</p>
-      <div class="code">docker compose logs --no-color monitor</div>
-      <p class="code-label">4 · Consulte o SQLite, se houver tempo</p>
-      <div class="code">docker compose exec monitor python -c "import sqlite3; c=sqlite3.connect('/data/readings.sqlite3'); [print(r) for r in c.execute('SELECT temperature_c, alert FROM readings ORDER BY id')]"</div>
-      <p class="small">Para encerrar sem apagar os dados: <code>docker compose down</code>.</p>
-    </div>
-    <div class="speaker"><b>Fala sugerida:</b> “Primeiro subo o broker e o monitor. Depois executo o simulador. Por fim, mostro o log para verificar as leituras e o alerta; a consulta opcional confirma a persistência.”</div>
-  </section>
-
-  <section class="slide">
-    <div class="topline"><span class="brand">MediSUS · resultados</span><span class="number">07 / 08</span></div>
-    <div class="content">
-      <p class="eyebrow">06 · o que observar</p>
-      <h1>Resultado da demonstração</h1>
-      <div class="result">
-        <div class="metric"><strong>12/12</strong><span>testes automatizados aprovados</span></div>
-        <div class="metric"><strong>4</strong><span>leituras sintéticas publicadas</span></div>
-        <div class="metric"><strong>1</strong><span>alerta no fluxo demonstrado</span></div>
-      </div>
-      <div class="alert-line">8.3 °C → "alert": true · acima do limite demonstrativo</div>
-      <div class="grid-2">
-        <div class="card accent">
-          <h3>O teste comprova</h3>
-          <p>O software recebe os valores do simulador, aplica a regra configurada e registra a classificação.</p>
-        </div>
-        <div class="card accent-amber">
-          <h3>O teste não comprova</h3>
-          <p>Uma condição clínica, a segurança de um produto ou o funcionamento de um sensor físico.</p>
+        <div class="card accent-blue">
+          <h3>Como demonstramos</h3>
+          <p>Um simulador envia leituras sintéticas pelo mesmo fluxo de software, sem depender de hardware.</p>
         </div>
       </div>
-      <p class="small" style="margin-top: 16px">Evidências disponíveis no projeto: <code>evidence/prints/</code>, <code>evidence/logs/</code> e <code>evidence/EVIDENCIAS.md</code>.</p>
+      <div class="callout">Na demonstração, os limites de temperatura são apenas parâmetros de teste. O sensor e o ESP32 são a proposta de implementação física.</div>
+      <div class="closing">“Nosso projeto IoT propõe monitorar as condições de armazenamento em uma UBS, como uma contribuição tecnológica relacionada ao objetivo do MediSUS.”</div>
     </div>
-    <div class="speaker"><b>Fala sugerida:</b> “No cenário sintético, 8,3 graus ficou acima do limite demonstrativo e foi registrado como alerta. Os 12 testes automatizados passaram. Isso valida o comportamento do software testado, não um uso clínico.”</div>
-  </section>
-
-  <section class="slide">
-    <div class="topline"><span class="brand">MediSUS · encerramento</span><span class="number">08 / 08</span></div>
-    <div class="content">
-      <p class="eyebrow">07 · conclusão</p>
-      <h1>Tecnologia como apoio à observação</h1>
-      <div class="grid-3" style="margin-top: 24px">
-        <div class="card accent-blue"><h3>Contexto</h3><p>Um desafio de armazenamento em serviço público de saúde.</p></div>
-        <div class="card accent"><h3>Protótipo</h3><p>MQTT, validação, regras configuráveis, SQLite e logs.</p></div>
-        <div class="card accent-amber"><h3>Próximo passo técnico</h3><p>Validar requisitos e limites aplicáveis; então testar hardware e integração em ambiente controlado.</p></div>
-      </div>
-      <div class="closing">“Este módulo demonstra como a IoT pode registrar condições de armazenamento e destacar leituras fora de parâmetros definidos, contribuindo para a discussão de tecnologia aplicada à saúde pública.”</div>
-      <p class="small" style="margin-top: 16px">Os parâmetros de temperatura usados são somente para demonstração; critérios reais dependem de fonte oficial aplicável ao produto.</p>
-    </div>
-    <div class="speaker"><b>Encerramento:</b> “Essa foi a demonstração do módulo IoT do MediSUS. Obrigado.”</div>
+    <div class="speaker"><b>Fala sugerida:</b> “O sensor faria a leitura e o ESP32 enviaria os dados por MQTT. O serviço Python valida e registra no SQLite, sinalizando valores fora da faixa configurada. Para demonstrar o fluxo, usamos dados sintéticos gerados pelo simulador.”</div>
   </section>
 </body>
 </html>

@@ -1,13 +1,15 @@
 # MediSUS IoT
 
-### Módulo IoT para apoio à saúde pública
+## Quem somos e qual é a ideia
 
-Na visão do MediSUS, a tecnologia pode facilitar o acesso da população aos medicamentos da rede pública. Este projeto explora um recorte IoT desse contexto CitizenTech: acompanhar a temperatura de armazenamento de medicamentos em uma Unidade Básica de Saúde (UBS), apoiando a observação das condições de armazenamento.
+Olá! Somos o **Grupo Urbis**, da turma **2TDSR**. Apresentamos o **MediSUS IoT**, nosso módulo de Internet das Coisas para a Global Solution 2026/2, no tema CitizenTech.
 
-**O projeto funciona sem placa ou sensor:** um simulador publica leituras sintéticas para que qualquer pessoa possa executar e observar o fluxo completo usando Docker Compose.
+A proposta geral do MediSUS é facilitar o acesso da população aos medicamentos da rede pública, incluindo a ideia de mostrar em qual UBS eles estão disponíveis. Para a matéria de IoT, escolhemos um recorte complementar: acompanhar a temperatura de armazenamento de medicamentos em uma UBS.
+
+O protótipo recebe leituras por MQTT, valida os dados, registra as temperaturas no SQLite e sinaliza valores fora dos parâmetros de demonstração. **A demonstração usa um simulador com leituras sintéticas; o ESP32 e o sensor DS18B20 são a implementação física prevista e não foram testados em hardware.**
 
 > [!IMPORTANT]
-> Este protótipo acadêmico usa leituras sintéticas. Os limites padrão de **2 °C a 8 °C são parâmetros de demonstração**, não uma recomendação médica ou regulatória. Em uma aplicação real, os limites devem vir de uma fonte oficial aplicável ao produto. O ESP32 e o circuito são referências e não foram validados em hardware.
+> Este protótipo acadêmico usa leituras sintéticas. Os limites padrão de **2 °C a 8 °C são parâmetros de demonstração**, não uma recomendação médica ou regulatória. Em uma aplicação real, os limites devem vir de uma fonte oficial aplicável ao produto.
 
 ## Equipe
 
@@ -84,7 +86,7 @@ Os limites são somente demonstrativos e uma leitura dentro deles não comprova 
 ## Guia de estudo para a apresentação
 
 Para revisar o fluxo, os termos técnicos, as escolhas, as limitações e perguntas prováveis, consulte o [Guia de estudo para a apresentação](GUIA_DE_ESTUDO.md).
-O [roteiro visual em PDF](presentation/MediSUS-IoT-apresentacao.pdf), com slides e falas sugeridas, pode ser usado como apoio para gravar a apresentação.
+Os [slides da apresentação em PDF](presentation/MediSUS-IoT-apresentacao.pdf) resumem o contexto MediSUS, a proposta IoT e o fluxo demonstrado.
 
 ## Como os componentes se conectam
 

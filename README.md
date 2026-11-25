@@ -84,6 +84,7 @@ Os limites são somente demonstrativos e uma leitura dentro deles não comprova 
 ## Guia de estudo para a apresentação
 
 Para revisar o fluxo, os termos técnicos, as escolhas, as limitações e perguntas prováveis, consulte o [Guia de estudo para a apresentação](GUIA_DE_ESTUDO.md).
+O [roteiro visual em PDF](presentation/MediSUS-IoT-apresentacao.pdf), com slides e falas sugeridas, pode ser usado como apoio para gravar a apresentação.
 
 ## Como os componentes se conectam
 

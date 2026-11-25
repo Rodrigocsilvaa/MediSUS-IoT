@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MediSUS IoT — guia da apresentação</title>
+  <style>
+    :root {
+      --pink: #ed145b;
+      --pink-dark: #bf0646;
+      --pink-pale: #fde8ef;
+      --blue: #1976d2;
+      --blue-pale: #e8f3ff;
+      --green-pale: #e3f6ed;
+      --ink: #202127;
+      --muted: #647083;
+      --line: #d9dce2;
+      --pale: #f3f4f6;
+      --white: #fff;
+    }
+
+    @page { size: A4 portrait; margin: 0; }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      background: #e5e6e9;
+      color: var(--ink);
+      font-family: "Segoe UI", Arial, sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .page {
+      position: relative;
+      width: 8.267in;
+      height: 11.693in;
+      margin: 16px auto;
+      padding: .58in .60in .58in;
+      overflow: hidden;
+      background: var(--white);
+      page-break-after: always;
+      break-after: page;
+    }
+    .page:last-child { page-break-after: auto; break-after: auto; }
+    .cover { padding: 0; }
+    .cover-top {
+      height: 6.05in;
+      padding: .55in .62in .3in;
+      background: linear-gradient(135deg, #f3135a 0%, #d50850 55%, #b80048 100%);
+      color: var(--white);
+    }
+    .cover-topline, .running-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .fiap {
+      font-size: 24pt;
+      font-weight: 300;
+      letter-spacing: .03em;
+    }
+    .cover-edition, .course-tag {
+      font-size: 8pt;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .cover-title { margin-top: .93in; }
+    .cover-title .course-tag { margin-bottom: 12px; }
+    h1 { margin: 0; font-size: 41pt; line-height: 1.03; letter-spacing: -.03em; }
+    .cover-subtitle {
+      max-width: 6.6in;
+      margin: 15px 0 0;
+      font-size: 18pt;
+      line-height: 1.28;
+    }
+    .cover-art {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: .58in;
+      padding: 0 .1in;
+    }
+    .art-item {
+      width: 1.52in;
+      text-align: center;
+      font-size: 10pt;
+    }
+    .art-item svg { display: block; width: .86in; height: .86in; margin: 0 auto 8px; }
+    .art-arrow { color: #fff; font-size: 23pt; font-weight: 300; }
+    .cover-bottom { padding: .40in .62in; }
+    .cover-meta {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--pink);
+    }
+    .cover-meta small { display: block; color: var(--muted); font-size: 8pt; letter-spacing: .12em; }
+    .cover-meta strong { display: block; margin-top: 2px; font-size: 21pt; }
+    .cover-meta .class strong { font-size: 15pt; }
+    .cover-table, .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9pt;
+    }
+    .cover-table { margin-top: 14px; }
+    .cover-table th, .data-table th {
+      padding: 8px 10px;
+      background: #202127;
+      color: white;
+      text-align: left;
+      font-weight: 700;
+    }
+    .cover-table td, .data-table td { padding: 8px 10px; border-bottom: 1px solid #e1e3e7; }
+    .cover-table tbody tr:nth-child(odd), .data-table tbody tr:nth-child(odd) { background: #f7f7f8; }
+    .cover-note { display: flex; justify-content: space-between; margin-top: 15px; color: var(--muted); font-size: 8pt; }
+
+    .running-head {
+      height: .40in;
+      padding-bottom: 9px;
+      border-bottom: 2px solid var(--pink);
+    }
+    .running-head .fiap { color: var(--ink); font-size: 19pt; }
+    .running-head span:last-child { color: var(--muted); font-size: 7.5pt; letter-spacing: .08em; }
+    .chapter { margin-top: .30in; }
+    .chapter-title {
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+      margin: 0;
+      font-size: 23pt;
+      line-height: 1.16;
+      letter-spacing: -.02em;
+    }
+    .chapter-no { color: var(--pink); font-weight: 800; }
+    .deck {
+      margin: 7px 0 17px;
+      color: var(--muted);
+      font-size: 11pt;
+      line-height: 1.42;
+    }
+    h2 { margin: 17px 0 8px; font-size: 14pt; line-height: 1.2; }
+    h3 { margin: 0 0 7px; font-size: 11pt; line-height: 1.2; }
+    p { margin: 0 0 10px; font-size: 10pt; line-height: 1.42; }
+    .cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .card {
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+    .card p { margin: 0; font-size: 9pt; }
+    .card-pink { border-color: #f4bfce; background: #fff4f7; }
+    .card-blue { border-color: #bedafa; background: #f3f8ff; }
+    .card-green { border-color: #bee4d0; background: #f0faf4; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+    .soft-box {
+      padding: 14px 15px;
+      border-radius: 12px;
+      background: var(--pale);
+    }
+    .soft-box.blue { background: var(--blue-pale); border: 1px solid #bedafa; }
+    .soft-box.pink { background: var(--pink-pale); border: 1px solid #f4bfce; }
+    .soft-box p:last-child { margin-bottom: 0; }
+    .quote {
+      margin-top: 14px;
+      padding: 13px 15px;
+      border: 1px solid #f4bfce;
+      border-radius: 11px;
+      background: var(--pink-pale);
+      font-size: 10pt;
+      line-height: 1.43;
+    }
+    .label {
+      display: inline-block;
+      margin-right: 7px;
+      padding: 3px 7px;
+      border-radius: 99px;
+      background: var(--pink);
+      color: #fff;
+      font-size: 7pt;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .steps { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 16px; }
+    .step { display: grid; grid-template-columns: 29px 1fr; gap: 9px; align-items: start; }
+    .step-num {
+      display: flex;
+      width: 27px;
+      height: 27px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--pink);
+      color: white;
+      font-size: 10pt;
+      font-weight: 800;
+    }
+    .step p { margin: 2px 0 0; font-size: 9pt; }
+    .architecture {
+      display: grid;
+      grid-template-columns: 1fr 20px 1fr 20px 1fr 20px 1fr;
+      align-items: center;
+      gap: 4px;
+      margin: 13px 0 12px;
+    }
+    .node {
+      min-height: 1.03in;
+      padding: 11px 8px;
+      border: 1px solid #cfd5dc;
+      border-radius: 11px;
+      background: #fff;
+      text-align: center;
+    }
+    .node-blue { border-color: #b6d6f7; background: #f2f8ff; }
+    .node-pink { border-color: #f3bdce; background: #fff4f7; }
+    .node strong { display: block; margin-bottom: 5px; font-size: 10pt; }
+    .node small { display: block; color: var(--muted); font-size: 7.4pt; line-height: 1.3; }
+    .arr { color: var(--pink); font-size: 16pt; font-weight: 800; text-align: center; }
+    .sources {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin: 10px 0 0;
+    }
+    .source {
+      padding: 9px 11px;
+      border-radius: 8px;
+      background: #f3f4f6;
+      color: var(--muted);
+      font-size: 8pt;
+      line-height: 1.35;
+    }
+    .source b { color: var(--ink); }
+    .code {
+      margin: 7px 0;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #202127;
+      color: white;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 8pt;
+      line-height: 1.4;
+    }
+    .compact-table { margin-top: 9px; }
+    .compact-table td, .compact-table th { padding: 6px 8px; font-size: 8pt; }
+    .footer {
+      position: absolute;
+      right: .60in;
+      bottom: .28in;
+      left: .60in;
+      display: flex;
+      justify-content: space-between;
+      padding-top: 7px;
+      border-top: 1px solid #e1e3e7;
+      color: var(--muted);
+      font-size: 7pt;
+    }
+    .pill {
+      display: inline-block;
+      padding: 3px 7px;
+      border-radius: 10px;
+      background: var(--green-pale);
+      color: #216a43;
+      font-size: 7pt;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .small { color: var(--muted); font-size: 8pt; }
+    @media print {
+      html, body { background: white; }
+      .page { margin: 0; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <div class="cover-top">
+      <div class="cover-topline"><span class="fiap">FIAP</span><span class="cover-edition">Global Solution 2026/2</span></div>
+      <div class="cover-title">
+        <p class="course-tag">Internet das Coisas · IoT</p>
+        <h1>MediSUS</h1>
+        <p class="cover-subtitle">Proposta de módulo IoT: monitoramento da temperatura de armazenamento de medicamentos em UBS</p>
+      </div>
+      <div class="cover-art" aria-label="Leitura, comunicação e UBS">
+        <div class="art-item">
+          <svg viewBox="0 0 80 80" fill="none" stroke="white" stroke-width="2.4" aria-hidden="true"><rect x="14" y="12" width="50" height="55" rx="8"/><path d="M25 29h27M25 39h27M25 49h17"/></svg>
+          Leitura de temperatura
+        </div>
+        <span class="art-arrow">···›</span>
+        <div class="art-item">
+          <svg viewBox="0 0 80 80" fill="none" stroke="white" stroke-width="2.4" aria-hidden="true"><circle cx="40" cy="40" r="26"/><path d="M40 23v34M23 40h34"/><path d="M13 18l7 7M67 18l-7 7"/></svg>
+          IoT · MQTT
+        </div>
+        <span class="art-arrow">···›</span>
+        <div class="art-item">
+          <svg viewBox="0 0 80 80" fill="none" stroke="white" stroke-width="2.4" aria-hidden="true"><path d="M12 34 40 14l28 20v33H12z"/><path d="M32 43h16M40 35v16M24 67V48h10v19"/></svg>
+          UBS · armazenamento
+        </div>
+      </div>
+    </div>
+    <div class="cover-bottom">
+      <div class="cover-meta">
+        <div><small>GRUPO</small><strong>Urbis</strong></div>
+        <div class="class"><small>TURMA</small><strong>2TDSR</strong></div>
+      </div>
+      <table class="cover-table">
+        <thead><tr><th>Integrantes</th><th>Projeto</th></tr></thead>
+        <tbody>
+          <tr><td>Natália Cristina · Nickolas Davi · Rodrigo Silva</td><td rowspan="2">MediSUS IoT</td></tr>
+          <tr><td>Samara Vilela · Otávio Ferreira</td></tr>
+        </tbody>
+      </table>
+      <div class="cover-note"><span>Global Solution 2026/2 · Internet das Coisas</span><span>Apresentação do projeto</span></div>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="running-head"><span class="fiap">FIAP</span><span>MEDISUS · GRUPO URBIS · GUIA IOT</span></div>
+    <div class="chapter">
+      <h2 class="chapter-title"><span class="chapter-no">01</span><span>Quem somos: Grupo Urbis</span></h2>
+      <p class="deck">MediSUS IoT · Turma 2TDSR · Global Solution 2026/2 · Internet das Coisas</p>
+      <div class="cards-3">
+        <div class="card card-pink">
+          <h3>O MediSUS</h3>
+          <p>Uma proposta para facilitar o acesso da população aos medicamentos da rede pública.</p>
+        </div>
+        <div class="card card-blue">
+          <h3>Nossa proposta IoT</h3>
+          <p>Acompanhar a temperatura de armazenamento de medicamentos em uma UBS, como contribuição ao contexto MediSUS.</p>
+        </div>
+        <div class="card card-green">
+          <h3>Nossa solução</h3>
+          <p>Receber leituras via MQTT, validar os dados, registrar no SQLite e sinalizar valores fora dos parâmetros de demonstração.</p>
+        </div>
+      </div>
+      <h2>Como se conecta ao MediSUS</h2>
+      <div class="two-col">
+        <div class="soft-box">
+          <h3>O contexto</h3>
+          <p>A proposta MediSUS trata do acesso a medicamentos da rede pública.</p>
+        </div>
+        <div class="soft-box blue">
+          <h3>O módulo IoT</h3>
+          <p>Acrescenta o acompanhamento das condições de armazenamento ao tema do projeto.</p>
+        </div>
+      </div>
+      <div class="quote"><span class="label">Escopo</span>O protótipo demonstrado usa leituras sintéticas do simulador. O DS18B20 e o ESP32 representam a implementação física prevista; não foram testados em hardware.</div>
+    </div>
+    <div class="footer"><span>Global Solution 2026/2 · Internet das Coisas · MediSUS IoT</span><span>2</span></div>
+  </section>
+
+  <section class="page">
+    <div class="running-head"><span class="fiap">FIAP</span><span>MEDISUS · GRUPO URBIS · GUIA IOT</span></div>
+    <div class="chapter">
+      <h2 class="chapter-title"><span class="chapter-no">02</span><span>Como a solução funciona</span></h2>
+      <p class="deck">O caminho da leitura, do sensor até o registro do alerta.</p>
+
+      <div class="sources">
+        <div class="source"><b>Ideia de implementação:</b> sensor DS18B20 conectado a uma placa ESP32.</div>
+        <div class="source"><b>Demonstração atual:</b> simulador Python gera leituras sintéticas no lugar do hardware.</div>
+      </div>
+      <div class="architecture">
+        <div class="node node-pink"><strong>Sensor / simulador</strong><small>Produz uma leitura de temperatura</small></div>
+        <div class="arr">›</div>
+        <div class="node node-blue"><strong>MQTT · Mosquitto</strong><small>Recebe e encaminha a mensagem</small></div>
+        <div class="arr">›</div>
+        <div class="node node-blue"><strong>Monitor Python</strong><small>Valida e compara com parâmetros</small></div>
+        <div class="arr">›</div>
+        <div class="node"><strong>SQLite + logs</strong><small>Armazena a leitura e sinaliza alerta</small></div>
+      </div>
+
+      <h2>O fluxo em quatro passos</h2>
+      <div class="steps">
+        <div class="step"><span class="step-num">1</span><p>O sensor (ou simulador) produz a temperatura e o horário.</p></div>
+        <div class="step"><span class="step-num">2</span><p>A mensagem segue pelo MQTT até o serviço Python.</p></div>
+        <div class="step"><span class="step-num">3</span><p>O serviço valida os dados e aplica os limites definidos para a demonstração.</p></div>
+        <div class="step"><span class="step-num">4</span><p>A leitura é registrada no SQLite e o resultado aparece no log.</p></div>
+      </div>
+
+      <h2>O que a demonstração mostra</h2>
+      <table class="data-table compact-table">
+        <thead><tr><th>Leitura sintética</th><th>Resultado no exemplo</th></tr></thead>
+        <tbody>
+          <tr><td>4,5 °C · 5,2 °C · 3,8 °C</td><td><span class="pill">Dentro dos limites de teste</span></td></tr>
+          <tr><td>8,3 °C</td><td>Alerta registrado: acima do limite demonstrativo</td></tr>
+        </tbody>
+      </table>
+      <div class="quote"><span class="label">Importante</span>Os limites de 2 °C a 8 °C são apenas parâmetros usados no exemplo, não uma regra universal para medicamentos. A demonstração usa dados sintéticos; o ESP32 e o sensor são uma proposta de implementação física.</div>
+    </div>
+    <div class="footer"><span>Global Solution 2026/2 · Internet das Coisas · MediSUS IoT</span><span>3</span></div>
+  </section>
+</body>
+</html>

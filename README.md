@@ -4,7 +4,7 @@
 
 Olá! Somos o **Grupo Urbis**, da turma **2TDSR**. Apresentamos o **MediSUS IoT**, nosso módulo de Internet das Coisas para a Global Solution 2026/2, no tema CitizenTech.
 
-A proposta geral do MediSUS é facilitar o acesso da população aos medicamentos da rede pública, incluindo a ideia de mostrar em qual UBS eles estão disponíveis. Para a matéria de IoT, escolhemos um recorte complementar: acompanhar a temperatura de armazenamento de medicamentos em uma UBS.
+A proposta geral do MediSUS parte do desafio de o paciente sair da consulta com a receita e não encontrar o medicamento na UBS. A ideia é usar tecnologia para facilitar esse acesso, indicando onde o medicamento está disponível. Para a matéria de IoT, escolhemos um recorte complementar: acompanhar a temperatura de armazenamento de medicamentos em uma UBS.
 
 O protótipo recebe leituras por MQTT, valida os dados, registra as temperaturas no SQLite e sinaliza valores fora dos parâmetros de demonstração. **A demonstração usa um simulador com leituras sintéticas; o ESP32 e o sensor DS18B20 são a implementação física prevista e não foram testados em hardware.**
 

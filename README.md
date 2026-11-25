@@ -1,15 +1,23 @@
 # MediSUS IoT
 
-## Quem somos e qual é a ideia
+> **GRUPO URBIS · 2TDSR · GLOBAL SOLUTION 2026/2 · CITIZENTECH**
 
-Olá! Somos o **Grupo Urbis**, da turma **2TDSR**. Apresentamos o **MediSUS IoT**, nosso módulo de Internet das Coisas para a Global Solution 2026/2, no tema CitizenTech.
+## Quem somos
 
-A proposta geral do MediSUS parte do desafio de o paciente sair da consulta com a receita e não encontrar o medicamento na UBS. A ideia é usar tecnologia para facilitar esse acesso, indicando onde o medicamento está disponível. Para a matéria de IoT, escolhemos um recorte complementar: acompanhar a temperatura de armazenamento de medicamentos em uma UBS.
+Somos o **Grupo Urbis**, da turma **2TDSR**, e este é o nosso projeto **MediSUS IoT** para a Global Solution 2026/2, no tema CitizenTech.
 
-O protótipo recebe leituras por MQTT, valida os dados, registra as temperaturas no SQLite e sinaliza valores fora dos parâmetros de demonstração. **A demonstração usa um simulador com leituras sintéticas; o ESP32 e o sensor DS18B20 são a implementação física prevista e não foram testados em hardware.**
+## Nossa ideia
+
+O MediSUS parte do desafio de o paciente sair da consulta com a receita e não encontrar o medicamento na UBS. Nossa proposta é facilitar o acesso, ajudando a identificar onde os medicamentos estão disponíveis na rede pública.
+
+## Nossa proposta IoT
+
+Como recorte de IoT, criamos um protótipo para acompanhar a temperatura de armazenamento de medicamentos em uma UBS. O fluxo recebe leituras por MQTT, valida os dados, registra as temperaturas no SQLite e sinaliza valores fora dos parâmetros de demonstração.
+
+**A demonstração usa um simulador com leituras sintéticas. O ESP32 e o sensor DS18B20 são a implementação física prevista e ainda não foram testados em hardware.**
 
 > [!IMPORTANT]
-> Este protótipo acadêmico usa leituras sintéticas. Os limites padrão de **2 °C a 8 °C são parâmetros de demonstração**, não uma recomendação médica ou regulatória. Em uma aplicação real, os limites devem vir de uma fonte oficial aplicável ao produto.
+> Os limites padrão de **2 °C a 8 °C são apenas parâmetros de demonstração**, não uma recomendação médica ou regulatória. Em uma aplicação real, os limites devem vir de uma fonte oficial aplicável ao produto.
 
 ## Equipe
 

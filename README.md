@@ -29,32 +29,88 @@ Como recorte de IoT, criamos um protótipo para acompanhar a temperatura de arma
 | Samara Vilela | RM566133 |
 | Otávio Ferreira | RM565960 |
 
-## Baixar o código no Windows
+## Passo a passo: executar pelo VS Code
 
-Abra o PowerShell e clone o repositório. O projeto está na branch padrão `main`:
+Siga as partes na ordem. Antes de começar, instale o **Visual Studio Code** e o **Docker Desktop** e deixe o Docker Desktop aberto. Na primeira execução, será necessária uma conexão com a internet para baixar os componentes do projeto.
+
+### Parte 1 — Baixar o projeto
+
+**O que fazer:** abra o PowerShell e copie estes comandos:
 
 ```powershell
 git clone https://github.com/Rodrigocsilvaa/MediSUS-IoT.git
 Set-Location MediSUS-IoT
 ```
 
-O código também pode ser consultado diretamente na [página do projeto no GitHub](https://github.com/Rodrigocsilvaa/MediSUS-IoT).
+**O que aconteceu:** o primeiro comando baixa uma cópia do projeto para o computador. O segundo entra na pasta do projeto, chamada `MediSUS-IoT`.
 
-## Abrir e executar pelo VS Code
+### Parte 2 — Abrir o projeto no VS Code
 
-1. Instale o Visual Studio Code e o Docker Desktop. O Docker Desktop precisa estar aberto para iniciar os contêineres.
-2. No PowerShell, entre na pasta do projeto e abra-a no VS Code:
+**O que fazer:** ainda no PowerShell, execute:
 
-   ```powershell
-   Set-Location MediSUS-IoT
-   code .
-   ```
+```powershell
+code .
+```
 
-   Se o comando `code` não estiver disponível, abra o VS Code e escolha **Arquivo > Abrir Pasta...**; selecione a pasta `MediSUS-IoT`.
-3. No VS Code, abra **Terminal > Novo Terminal**. O terminal integrado deve estar na pasta do projeto.
-4. Execute os comandos da seção [Início rápido](#início-rápido-execute-a-demonstração). Os logs e o resultado do simulador aparecerão nesse terminal.
+**O que aconteceu:** o VS Code abre a pasta do projeto. O ponto (`.`) significa “a pasta em que estou agora”. Se aparecer uma mensagem dizendo que `code` não é reconhecido, abra o VS Code, escolha **Arquivo > Abrir Pasta...** e selecione a pasta `MediSUS-IoT`.
 
-Não é necessária uma extensão do VS Code para rodar a demonstração com Docker Compose. Para editar e executar os testes Python localmente, instale Python 3.10 ou superior.
+### Parte 3 — Abrir o terminal do VS Code
+
+**O que fazer:** no VS Code, escolha **Terminal > Novo Terminal**.
+
+**O que aconteceu:** aparece um terminal na parte de baixo da janela. Ele deve estar na pasta `MediSUS-IoT`; é nele que você vai colar os próximos comandos.
+
+### Parte 4 — Iniciar o broker e o serviço
+
+**O que fazer:** no terminal do VS Code, execute:
+
+```powershell
+docker compose up -d --build mosquitto monitor
+```
+
+**O que aconteceu:** o Docker prepara e inicia dois componentes: o Mosquitto, que recebe as mensagens MQTT, e o serviço Python, que valida e registra as temperaturas. A opção `-d` deixa os componentes rodando em segundo plano.
+
+### Parte 5 — Enviar as temperaturas de demonstração
+
+**O que fazer:** execute:
+
+```powershell
+docker compose --profile demo run --rm simulator
+```
+
+**O que aconteceu:** o simulador envia quatro temperaturas artificiais (`4.5`, `5.2`, `8.3` e `3.8` °C) pelo MQTT. Não são medições de um sensor real.
+
+### Parte 6 — Ver as leituras e o alerta
+
+**O que fazer:** consulte o log do serviço:
+
+```powershell
+docker compose logs --no-color monitor
+```
+
+**O que aconteceu:** o serviço mostra as leituras recebidas. Com os limites configurados para esta demonstração, `8.3 °C` aparece como alerta (`"alert": true`); as demais ficam sem alerta (`"alert": false`). Esses limites são apenas demonstrativos.
+
+### Parte 7 — Consultar o que foi salvo
+
+**O que fazer:** para ver os registros no banco SQLite, execute:
+
+```powershell
+docker compose exec monitor python -c "import sqlite3; c=sqlite3.connect('/data/readings.sqlite3'); [print(r) for r in c.execute('SELECT device_id, temperature_c, timestamp, alert FROM readings ORDER BY id')]"
+```
+
+**O que aconteceu:** o comando abre o banco dentro do serviço e imprime as leituras salvas, incluindo a temperatura e se cada registro gerou alerta. Se você já executou a demonstração antes, também podem aparecer registros anteriores.
+
+### Parte 8 — Encerrar a demonstração
+
+**O que fazer:** quando terminar, execute:
+
+```powershell
+docker compose down
+```
+
+**O que aconteceu:** os componentes são encerrados. As leituras salvas são mantidas para a próxima execução. Não é necessária uma extensão do VS Code para fazer esta demonstração com Docker Compose.
+
+> **Atenção:** `docker compose down --volumes` também apaga o banco e as leituras salvas. Não use essa opção se quiser manter os resultados.
 
 ## Navegação
 
@@ -63,9 +119,8 @@ Não é necessária uma extensão do VS Code para rodar a demonstração com Doc
 - [Como os componentes se conectam](#como-os-componentes-se-conectam)
 - [Tecnologias e justificativas](#tecnologias-e-justificativas)
 - [Guia de estudo para a apresentação](#guia-de-estudo-para-a-apresentação)
-- [Abrir e executar pelo VS Code](#abrir-e-executar-pelo-vs-code)
-- [Executar a demonstração](#início-rápido-execute-a-demonstração)
-- [Gerar um resumo com IA](#gerar-um-resumo-com-ia)
+- [Passo a passo: executar pelo VS Code](#passo-a-passo-executar-pelo-vs-code)
+- [Resumo opcional com IA](#resumo-opcional-com-ia)
 - [Executar os testes](#executar-os-testes)
 - [Evidências e avaliação](#evidências-e-avaliação)
 - [Integração de referência ESP32 e DS18B20](#integração-de-referência-esp32-e-ds18b20)
@@ -123,101 +178,41 @@ Na demonstração rápida, o simulador ocupa o lugar do sensor e do ESP32. O fir
 | OpenAI Chat Completions API, modelo `gpt-4.1-mini` | Resumo opcional em português das últimas leituras | Um modelo generativo facilita explicar os resultados em linguagem natural. O modelo pode ser alterado por `OPENAI_MODEL`; a resposta é informativa, pode errar e não decide alertas nem dá orientação clínica. A chamada real exige chave e pode gerar cobrança. |
 | Simulador Python | Publicação dos quatro valores sintéticos da demonstração | Torna o fluxo reproduzível sem placa ou sensor. As leituras são artificiais e não representam medições. |
 
-## O que você precisa
+## Resumo opcional com IA
 
-Para executar a demonstração:
+Esta parte é opcional e só precisa ser feita se você quiser gerar um resumo em texto das leituras. Ela exige uma conta com acesso à API da OpenAI, uma chave de API, conexão com a internet e pode gerar cobrança. O resumo não decide os alertas.
 
-- Docker Desktop instalado e **em execução**.
-- Docker Compose v2 (incluído nas versões atuais do Docker Desktop).
+### Parte opcional 1 — Criar a configuração local
 
-Para executar os testes localmente, também é necessário Python 3.10 ou superior. A conexão do ESP32 é opcional e exige placa, sensor e Arduino IDE ou PlatformIO.
-
-O resumo com IA é opcional e requer uma chave de API da OpenAI, acesso à internet e uma conta com acesso à API. O uso da API pode gerar cobrança conforme a conta e o modelo. A chave não está incluída no projeto.
-
-## Início rápido: execute a demonstração
-
-Abra um terminal na pasta do repositório. Inicie o broker e o serviço:
+**O que fazer:** no terminal do VS Code, copie o arquivo de exemplo e abra a cópia:
 
 ```powershell
-docker compose up -d --build mosquitto monitor
+Copy-Item .env.example .env
+notepad .env
 ```
 
-Quando os serviços estiverem iniciados, execute o simulador:
+**O que aconteceu:** foi criado um arquivo local chamado `.env` para guardar a configuração da sua máquina. Ele é ignorado pelo Git e não deve ser enviado ao GitHub.
+
+### Parte opcional 2 — Colocar a chave da API
+
+**O que fazer:** dentro do `.env`, substitua o texto de exemplo pela sua chave e salve:
+
+```text
+OPENAI_API_KEY=cole-sua-chave-aqui
+OPENAI_MODEL=gpt-4.1-mini
+```
+
+**O que aconteceu:** o serviço poderá usar a chave quando você pedir o resumo. Não mostre nem compartilhe esse arquivo. Use apenas as leituras sintéticas; não envie dados pessoais ou medições reais.
+
+### Parte opcional 3 — Pedir o resumo
+
+**O que fazer:** depois de executar a demonstração principal, rode:
 
 ```powershell
-docker compose --profile demo run --rm simulator
+docker compose --profile ai run --rm ai-summary
 ```
 
-Veja o resultado:
-
-```powershell
-docker compose logs --no-color monitor
-```
-
-Também é possível verificar o estado dos contêineres:
-
-```powershell
-docker compose ps
-```
-
-### Resultado esperado
-
-O simulador envia quatro leituras **sintéticas**: `4.5 °C`, `5.2 °C`, `8.3 °C` e `3.8 °C`. Com os limites demonstrativos padrão de `2 °C` e `8 °C`:
-
-| Leitura sintética | Resultado esperado |
-|---:|---|
-| 4.5 °C | Dentro do intervalo; registrada sem alerta |
-| 5.2 °C | Dentro do intervalo; registrada sem alerta |
-| 8.3 °C | Acima do limite demonstrativo; registrada com alerta |
-| 3.8 °C | Dentro do intervalo; registrada sem alerta |
-
-No log do serviço, cada leitura válida aparece como JSON. A leitura `8.3 °C` aparece no nível `WARNING` com `"alert": true`; as outras aparecem como `INFO` com `"alert": false`.
-
-Para consultar também as linhas guardadas no SQLite dentro do contêiner:
-
-```powershell
-docker compose exec monitor python -c "import sqlite3; c=sqlite3.connect('/data/readings.sqlite3'); [print(r) for r in c.execute('SELECT device_id, temperature_c, timestamp, alert FROM readings ORDER BY id')]"
-```
-
-### Gerar um resumo com IA
-
-Depois de executar o simulador, você pode pedir à IA que resuma as últimas leituras. A integração usa a API da OpenAI e só é iniciada quando você executa este passo. Ela envia no máximo 20 leituras, contendo temperatura, horário e o alerta calculado; não envia o identificador do sensor.
-
-1. Copie a configuração de exemplo e abra o arquivo local:
-
-   ```powershell
-   Copy-Item .env.example .env
-   notepad .env
-   ```
-
-2. Coloque sua chave da API em `OPENAI_API_KEY` e salve. O modelo já vem preenchido:
-
-   ```text
-   OPENAI_API_KEY=cole-sua-chave-aqui
-   OPENAI_MODEL=gpt-4.1-mini
-   ```
-
-3. Execute o resumidor:
-
-   ```powershell
-   docker compose --profile ai run --rm ai-summary
-   ```
-
-O arquivo `.env` é ignorado pelo Git; `.env.example` não contém credenciais. **Não compartilhe nem envie seu arquivo `.env` ao repositório.** Use somente as leituras sintéticas da demonstração: não envie dados de pacientes, funcionários ou medições reais a um serviço externo. A resposta gerada pode conter erros; ela é apenas um resumo informativo e não deve orientar decisões clínicas. A classificação de alertas continua sendo feita pelo código, com limites demonstrativos.
-
-### Parar a demonstração
-
-Para parar os serviços sem apagar os dados:
-
-```powershell
-docker compose down
-```
-
-As leituras ficam no volume Docker `medisus-iot-data`. Para parar os serviços **e apagar esse volume**, use:
-
-```powershell
-docker compose down --volumes
-```
+**O que aconteceu:** o programa envia as últimas leituras sintéticas à API e exibe um resumo em português. A resposta pode conter erros e é apenas informativa; os alertas são calculados pelo código, não pela IA.
 
 ## Executar os testes
 
